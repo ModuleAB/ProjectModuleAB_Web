@@ -16,7 +16,7 @@
     "karma-junit-reporter": "^0.2.2",
     "protractor": "^2.1.0",
     "shelljs": "^0.2.6",
-    "jquery": "^2.3.0",
+    "jquery": "^2.2.0",
     "bootstrap": "^3.3.6"
   },
   "scripts": {
