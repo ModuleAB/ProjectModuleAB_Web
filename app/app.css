@@ -1,5 +1,26 @@
 /* app css stylesheet */
 
+.moduleab-logo {
+  margin-top: 19%;
+  text-align: center;
+}
+
+.notify {
+  position: fixed;
+  left: 0;
+  top: 8px;
+  right: 0;
+  text-align: center
+}
+
+.notify > div{
+  display: inline-block;
+}
+
+.login-panel {
+  margin-top: 10% !important;
+}
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
