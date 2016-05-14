@@ -1,9 +1,9 @@
 {
   "name": "moduleab-web",
-  "description": "A starter project for AngularJS",
+  "description": "Web interface for ModuleAB",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
-  "license": "MIT",
+  "homepage": "https://github.com/ProjectModuleAngelaBaby/ProjectModuleAB_Web",
+  "license": "GPL",
   "private": true,
   "dependencies": {
     "angular": "~1.4.0",
