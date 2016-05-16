@@ -5,3 +5,54 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+
+<!-- Modal -->
+<script type="text/ng-template" id="userModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">{{type}}用户</h3>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="doJob()">
+                <i class="fa fa-fw" ng-class="jobType"></i> {{job}}
+            </button>
+            <button class="btn btn-default" ng-click="cancel()">
+                <i class="fa fa-remove fa-fw"></i> 取消
+            </button>
+        </div>
+</script>
+
+<div class="row">
+    <button type="button" class="btn btn-primary" ng-click="userEdit('new')">
+        <i class="fa fa-plus fa-fw"></i> 新增
+    </button>
+    <table class="col-lg-12 table table-striped">
+        <thead>
+            <th>登录名</th>
+            <th>显示名</th>
+            <th>角色</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>{{user.loginname}}</td>
+                <td>{{user.name}}</td>
+                <td>
+                    <span ng-repeat="role in user.Roles">
+                        {{role.name}}, 
+                    </span>
+                </td>
+                <td style="text-align:right">
+                    <button type="button" class="btn btn-default" ng-click="userEdit('modify', user)">
+                        <i class="fa fa-pencil fa-fw"></i> 修改
+                    </button>
+                    <button type="button" class="btn btn-danger" ng-disable="!user.removable" ng-click="delete(user)">
+                        <i class="fa fa-trash fa-fw"></i> 删除
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

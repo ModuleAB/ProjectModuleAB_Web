@@ -13,6 +13,7 @@
 
 angular.module('ModuleAB' ,[
     'ngRoute',
+    'ui.bootstrap',
     'ModuleAB.appsets',
     'ModuleAB.records',
     'ModuleAB.policies',
@@ -31,7 +32,7 @@ controller("topNavBar", function($scope, $http){
         method: "GET",
         url: "/api/v1/auth/check"
     }).then(function(response){
-        // do nothing.
+        $scope.showName = response.data.show_name;
     }, function(response){
         window.location.href = "/login";
     });
