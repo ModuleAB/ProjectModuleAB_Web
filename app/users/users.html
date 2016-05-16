@@ -11,7 +11,17 @@
         <div class="modal-header">
             <h3 class="modal-title">{{type}}用户</h3>
         </div>
-        <div class="modal-body"></div>
+        <div class="modal-body">
+            <label for="loginname">登录名</label>
+            <input id="loginname" name="loginname" ng-model="user.loginname" class="form-control" placeholder="登录名"/>
+            <label for="showname">显示名</label>
+            <input id="showname" name="showname" ng-model="user.name" class="form-control" placeholder="显示名"/>
+            <label for="password">密码</label>
+            <input id="password" name="password" type="password" ng-model="user.password" class="form-control" placeholder="密码"/>
+            <label for="password2">确认密码</label>
+            <input id="password2" name="password2" type="password" ng-model="password2" class="form-control" placeholder="确认密码"/>
+            <label for="roles">角色</label>
+        </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="doJob()">
                 <i class="fa fa-fw" ng-class="jobType"></i> {{job}}
@@ -46,7 +56,7 @@
                     <button type="button" class="btn btn-default" ng-click="userEdit('modify', user)">
                         <i class="fa fa-pencil fa-fw"></i> 修改
                     </button>
-                    <button type="button" class="btn btn-danger" ng-disable="!user.removable" ng-click="delete(user)">
+                    <button type="button" class="btn btn-danger" ng-disabled="!user.removable" ng-click="delete(user)">
                         <i class="fa fa-trash fa-fw"></i> 删除
                     </button>
                 </td>
