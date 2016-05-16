@@ -11,3 +11,43 @@
   //$routeProvider.otherwise({redirectTo: '/view1'});
 //}]);
 
+angular.module('ModuleAB' ,[
+    'ngRoute',
+    'ModuleAB.appsets',
+    'ModuleAB.records',
+    'ModuleAB.policies',
+    'ModuleAB.hosts',
+    'ModuleAB.paths',
+    'ModuleAB.backupsets',
+    'ModuleAB.oss',
+    'ModuleAB.oas',
+    'ModuleAB.users'
+]).
+config(['$routeProvider', function($routeProvider){
+    $routeProvider.otherwise({redirectTo: '/records'});
+}]).
+controller("topNavBar", function($scope, $http){
+    $http({
+        method: "GET",
+        url: "/api/v1/auth/check"
+    }).then(function(response){
+        // do nothing.
+    }, function(response){
+        window.location.href = "/login";
+    });
+    $scope.logout = function() {
+        $http({
+            method: "GET",
+            url: "/api/v1/auth/logout"
+        }).then(function(response){
+            window.location.href = "/login";
+        }, function(response){
+            switch(response.status){
+            case 401:
+                window.location.href = "/login";
+                break
+            }
+        });
+    };
+});
+
