@@ -41,13 +41,13 @@
               </span>
               <select multiple class="form-control" id="roles" name="roles" ng-model="selectedRoles" ng-options="role.id as role.name for role in roles"></select>
             </div>
-            <div class="notify" ng-class="modalInfoFadein">
+            <div class="notify fadein" ng-class="modalInfoFadein">
               <div class="alert alert-warning">
                 <i class="fa fa-warning fa-fw"></i> {{modalInfoMsg}}
               </div>
             </div>
         </div>
-        <div class="modal-footer" ng-show="modalUserNotifyShow">
+        <div class="modal-footer">
             <button class="btn btn-primary" ng-click="doJob()">
                 <i class="fa fa-fw" ng-class="jobType"></i> {{job}}
             </button>

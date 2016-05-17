@@ -61,18 +61,18 @@ app.controller('users', ['$scope', '$http', '$uibModal', '$rootScope',
             case 404:
               $rootScope.alertType = 'alert-warning';
               $rootScope.failMessage = "无此用户";
-              $rootScope.fadein = '';
+              $rootScope.fadein = 'fadein-opacity';
               break;
             case 500:
               $rootScope.alertType = 'alert-warning';
               $rootScope.failMessage = "服务器错误，见控制台输出";
-              $rootScope.fadein = '';
+              $rootScope.fadein = 'fadein-opacity';
               console.log(response.data);
               break;
             default:
               $rootScope.alertType = 'alert-warning';
               $rootScope.failMessage = "通讯故障";
-              $rootScope.fadein = '';
+              $rootScope.fadein = 'fadein-opacity';
               break;
           }
         });
@@ -134,30 +134,25 @@ app.controller('userModal', function($scope, $http, $uibModalInstance, type,
       $scope.job = "修改";
       break;
   }
-  $scope.modalUserNotifyShow = false;
-  $scope.modalInfoFadein = "fadein";
+  $scope.modalInfoFadein = "";
   $scope.doJob = function() {
     if ($scope.user.loginname == '') {
-      $scope.modalUserNotifyShow = true;
-      $scope.modalInfoFadein = "";
+      $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "登录名不能为空";
       return;
     }
     if ($scope.user.name == '') {
-      $scope.modalUserNotifyShow = true;
-      $scope.modalInfoFadein = "";
+      $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "显示名不能为空";
       return;
     }
     if (!$scope.user.password.match(/.{8,32}/)) {
-      $scope.modalUserNotifyShow = true;
-      $scope.modalInfoFadein = "";
+      $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "密码长度为8-32位！";
       return;
     }
     if ($scope.user.password != $scope.password2) {
-      $scope.modalUserNotifyShow = true;
-      $scope.modalInfoFadein = "";
+      $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "两次输入的密码不一致！";
       return;
     }
@@ -170,8 +165,7 @@ app.controller('userModal', function($scope, $http, $uibModalInstance, type,
       });
     });
     if ($scope.user.Roles.length == 0) {
-      $scope.modalUserNotifyShow = true;
-      $scope.modalInfoFadein = "";
+      $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "请指定至少一个用户角色";
       return;
     }
@@ -185,8 +179,7 @@ app.controller('userModal', function($scope, $http, $uibModalInstance, type,
         }).then(function(response) {
           $uibModalInstance.close(response.data.id);
         }, function(response) {
-          $scope.modalUserNotifyShow = true;
-          $scope.modalInfoFadein = "";
+          $scope.modalInfoFadein = "fadein-opacity";
           switch (response.status) {
             case 400:
               $scope.modalInfoMsg = "数据错误";
@@ -216,8 +209,7 @@ app.controller('userModal', function($scope, $http, $uibModalInstance, type,
         }).then(function(response) {
           $uibModalInstance.close(response.status);
         }, function(response) {
-          $scope.modalUserNotifyShow = true;
-          $scope.modalInfoFadein = "";
+          $scope.modalInfoFadein = "fadein-opacity";
           switch (response.status) {
             case 400:
               $scope.modalInfoMsg = "数据错误";

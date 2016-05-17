@@ -27,7 +27,7 @@ config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
 controller("topNavBar", ['$scope', '$http', '$rootScope',
   function($scope, $http, $rootScope) {
     $rootScope.dismiss = function() {
-      $rootScope.fadein = 'fadein';
+      $rootScope.fadein = '';
     };
     $rootScope.dismiss();
     $http({
