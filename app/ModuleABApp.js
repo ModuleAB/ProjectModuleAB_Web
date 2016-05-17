@@ -1,20 +1,11 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-//var app = angular.module('ModuleAB', [
-//'ngRoute',
-//'myApp.view1',
-//'myApp.view2',
-//'myApp.version'
-//]).
-//config(['$routeProvider', function($routeProvider) {
-//$routeProvider.otherwise({redirectTo: '/view1'});
-//}]);
-
 angular.module('ModuleAB', [
   'ngRoute',
   'ui.bootstrap',
   '720kb.tooltips',
+  'angular-loading-bar',
+  'ngAnimate',
   'ModuleAB.appsets',
   'ModuleAB.records',
   'ModuleAB.policies',
@@ -29,6 +20,9 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({
     redirectTo: '/records'
   });
+}]).
+config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+  cfpLoadingBarProvider.includeSpinner = false;
 }]).
 controller("topNavBar", ['$scope', '$http', '$rootScope',
   function($scope, $http, $rootScope) {
