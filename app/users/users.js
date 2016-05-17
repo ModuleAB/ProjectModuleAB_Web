@@ -134,24 +134,29 @@ app.controller('userModal', function($scope, $http, $uibModalInstance, type,
       $scope.job = "修改";
       break;
   }
+  $scope.modalUserNotifyShow = false;
   $scope.modalInfoFadein = "fadein";
   $scope.doJob = function() {
     if ($scope.user.loginname == '') {
+      $scope.modalUserNotifyShow = true;
       $scope.modalInfoFadein = "";
       $scope.modalInfoMsg = "登录名不能为空";
       return;
     }
     if ($scope.user.name == '') {
+      $scope.modalUserNotifyShow = true;
       $scope.modalInfoFadein = "";
       $scope.modalInfoMsg = "显示名不能为空";
       return;
     }
     if (!$scope.user.password.match(/.{8,32}/)) {
+      $scope.modalUserNotifyShow = true;
       $scope.modalInfoFadein = "";
       $scope.modalInfoMsg = "密码长度为8-32位！";
       return;
     }
     if ($scope.user.password != $scope.password2) {
+      $scope.modalUserNotifyShow = true;
       $scope.modalInfoFadein = "";
       $scope.modalInfoMsg = "两次输入的密码不一致！";
       return;
@@ -165,6 +170,7 @@ app.controller('userModal', function($scope, $http, $uibModalInstance, type,
       });
     });
     if ($scope.user.Roles.length == 0) {
+      $scope.modalUserNotifyShow = true;
       $scope.modalInfoFadein = "";
       $scope.modalInfoMsg = "请指定至少一个用户角色";
       return;
@@ -179,6 +185,7 @@ app.controller('userModal', function($scope, $http, $uibModalInstance, type,
         }).then(function(response) {
           $uibModalInstance.close(response.data.id);
         }, function(response) {
+          $scope.modalUserNotifyShow = true;
           $scope.modalInfoFadein = "";
           switch (response.status) {
             case 400:
@@ -209,6 +216,7 @@ app.controller('userModal', function($scope, $http, $uibModalInstance, type,
         }).then(function(response) {
           $uibModalInstance.close(response.status);
         }, function(response) {
+          $scope.modalUserNotifyShow = true;
           $scope.modalInfoFadein = "";
           switch (response.status) {
             case 400:
