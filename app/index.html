@@ -27,6 +27,7 @@
 
     <!-- Custom CSS -->
     <link href="/bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/bower_components/angular-tooltips/dist/angular-tooltips.min.css" rel="stylesheet">
     <link href="/app.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
@@ -38,28 +39,34 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+
     <!-- Basic JavaScript lib -->
     <!-- Angular.js -->
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    
+    <script src="/bower_components/angular-tooltips/dist/angular-tooltips.min.js"></script>
+
     <!-- jQuery -->
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+    <!-- Custom JavaScript -->
+    <script src="/bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
+    <script src="/ModuleABApp.js"></script>
+
 </head>
 
 <body>
 
     <div id="wrapper">
-        <div class="notify" ng-class="fadein">
-            <div class="alert" ng-class="alertType">
-                {{failMessage}}
+        <div class="notify" ng-class="$root.fadein">
+            <div class="alert alert-dismissable" ng-class="$root.alertType">
+              <button type="button" class="close" ng-click="$root.dismiss()">×</button>
+                {{$root.failMessage}}
             </div>
         </div>
 
@@ -141,7 +148,7 @@
                         <li>
                             <a href="#/oas"><i class="fa fa-save fa-fw"></i> OAS</a>
                         </li>
-                        
+
                         <li>
                             <a href="#/users"><i class="fa fa-user fa-fw"></i> 用户管理</a>
                         </li>
@@ -169,8 +176,6 @@
     <script src="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="/bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
-    <script src="/ModuleABApp.js"></script>
     <script src="/records/records.js"></script>
     <script src="/policies/policies.js"></script>
     <script src="/hosts/hosts.js"></script>
