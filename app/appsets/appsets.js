@@ -176,7 +176,7 @@ var app = angular.module('ModuleAB.appsets', ['ngRoute'])
               $scope.modalInfoMsg = "访问被拒绝";
               break;
             case 404:
-              $scope.modalInfoMsg = "无此用户";
+              $scope.modalInfoMsg = "无此应用集";
               break;
             case 500:
               $scope.modalInfoMsg = "服务器错误，见控制台输出";

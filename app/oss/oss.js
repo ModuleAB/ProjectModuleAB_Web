@@ -67,7 +67,7 @@ angular.module('ModuleAB.oss', ['ngRoute'])
               $rootScope.failMessage = "没有权限";
               break;
             case 404:
-              $rootScope.failMessage = "无此应用集";
+              $rootScope.failMessage = "无此OSS";
               break;
             case 500:
               $rootScope.failMessage = "服务器错误，见控制台输出";
