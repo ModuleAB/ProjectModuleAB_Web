@@ -30,11 +30,13 @@ controller("topNavBar", ['$scope', '$http', '$rootScope',
       $rootScope.fadein = '';
     };
     $rootScope.dismiss();
+
     $http({
       method: "GET",
       url: "/api/v1/auth/check"
     }).then(function(response) {
       $scope.showName = response.data.show_name;
+      $rootScope.loaded = true;
     }, function(response) {
       window.location.href = "/login";
     });

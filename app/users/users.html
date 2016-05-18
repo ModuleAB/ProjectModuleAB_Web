@@ -12,28 +12,28 @@
             <h3 class="modal-title">{{type}}用户</h3>
         </div>
         <div class="modal-body">
-            <div class="form-group input-group">
+            <div class="form-group input-group" tooltips tooltip-template="登录名">
               <span class="input-group-addon">
                 <i class="fa fa-key fa-fw"></i></span>
-              <input id="loginname" name="loginname" ng-model="user.loginname" class="form-control" placeholder="登录名"/>
+              <input ng-model="user.loginname" class="form-control" placeholder="登录名"/>
             </div>
-            <div class="form-group input-group">
+            <div class="form-group input-group" tooltips tooltip-template="显示名">
               <span class="input-group-addon">
                 <i class="fa fa-user fa-fw"></i>
               </span>
-              <input id="showname" name="showname" ng-model="user.name" class="form-control" placeholder="显示名"/>
+              <input ng-model="user.name" class="form-control" placeholder="显示名"/>
             </div>
-            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'">
+            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'" tooltips tooltip-template="密码">
               <span class="input-group-addon">
                 <i class="fa fa-lock fa-fw"></i>
               </span>
-              <input id="password" name="password" type="password" ng-model="user.password" class="form-control" placeholder="密码"/>
+              <input type="password" ng-model="user.password" class="form-control" placeholder="密码"/>
             </div>
-            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'">
+            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'" tooltips tooltip-template="确认密码">
               <span class="input-group-addon">
                 <i class="fa fa-check fa-fw"></i>
               </span>
-              <input id="password2" name="password2" type="password" ng-model="password2" class="form-control" placeholder="确认密码"/>
+              <input type="password" ng-model="password2" class="form-control" placeholder="确认密码"/>
             </div>
             <div class="form-group input-group" tooltips tooltip-template="角色">
               <span class="input-group-addon">

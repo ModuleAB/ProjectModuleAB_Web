@@ -1,15 +1,15 @@
 'use strict';
 
-var app = angular.module('ModuleAB.users', ['ngRoute']);
+angular.module('ModuleAB.users', ['ngRoute'])
 
-app.config(['$routeProvider', function($routeProvider) {
+.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/users', {
     templateUrl: 'users/users.html',
     controller: 'users'
   });
-}]);
+}])
 
-app.controller('users', ['$scope', '$http', '$uibModal', '$rootScope',
+.controller('users', ['$scope', '$http', '$uibModal', '$rootScope',
   function($scope, $http, $uibModal, $rootScope) {
     $scope.usersGet = function() {
       $http({
@@ -57,31 +57,33 @@ app.controller('users', ['$scope', '$http', '$uibModal', '$rootScope',
         }).then(function(response) {
           $scope.usersGet();
         }, function(response) {
+          $rootScope.alertType = 'alert-warning';
+          $rootScope.fadein = 'fadein-opacity';
           switch (response.status) {
+            case 401:
+              window.location.href = "/login";
+              break;
+            case 403:
+              $rootScope.failMessage = "没有权限";
+              break;
             case 404:
-              $rootScope.alertType = 'alert-warning';
               $rootScope.failMessage = "无此用户";
-              $rootScope.fadein = 'fadein-opacity';
               break;
             case 500:
-              $rootScope.alertType = 'alert-warning';
               $rootScope.failMessage = "服务器错误，见控制台输出";
-              $rootScope.fadein = 'fadein-opacity';
               console.log(response.data);
               break;
             default:
-              $rootScope.alertType = 'alert-warning';
               $rootScope.failMessage = "通讯故障";
-              $rootScope.fadein = 'fadein-opacity';
               break;
           }
         });
       });
     };
   }
-]);
+])
 
-app.controller('deleteUserModal', function($scope, $uibModalInstance, user) {
+.controller('deleteUserModal', function($scope, $uibModalInstance, user) {
   $scope.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };
@@ -89,9 +91,9 @@ app.controller('deleteUserModal', function($scope, $uibModalInstance, user) {
     $uibModalInstance.close('delete');
   }
   $scope.modalDeleteObjName = user.name;
-});
+})
 
-app.controller('userModal', function($scope, $http, $uibModalInstance, type,
+.controller('userModal', function($scope, $http, $uibModalInstance, type,
   user) {
   if (user === undefined) {
     user = {
