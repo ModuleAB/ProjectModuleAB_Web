@@ -61,7 +61,7 @@
             <th></th>
         </thead>
         <tbody>
-            <tr ng-repeat="path in paths">
+            <tr ng-repeat="path in paths | orderBy:'path.path'">
                 <td class="table-td-padding"></td>
                 <td class="table-td-padding">{{path.path}}</td>
                 <td class="table-td-padding">{{path.backupset.name}}</td>

@@ -171,7 +171,7 @@ angular.module('ModuleAB.users', ['ngRoute'])
       $scope.modalInfoMsg = "请指定至少一个用户角色";
       return;
     }
-    console.log($scope.user);
+
     switch (type) {
       case 'new':
         $http({

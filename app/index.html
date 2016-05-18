@@ -68,8 +68,92 @@
     <script src="/oss/oss.js"></script>
     <script src="/oas/oas.js"></script>
     <script src="/users/users.js"></script>
+    <script type="text/ng-template" id="userProfileModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">用户信息</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group input-group" tooltips tooltip-template="登录名">
+              <span class="input-group-addon">
+                <i class="fa fa-key fa-fw"></i></span>
+              <input ng-model="user.loginname" class="form-control" placeholder="登录名"/>
+            </div>
+            <div class="form-group input-group" tooltips tooltip-template="显示名">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa-fw"></i>
+              </span>
+              <input ng-model="user.name" class="form-control" placeholder="显示名"/>
+            </div>
+            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'" tooltips tooltip-template="密码">
+              <span class="input-group-addon">
+                <i class="fa fa-lock fa-fw"></i>
+              </span>
+              <input type="password" ng-model="user.password" class="form-control" placeholder="密码"/>
+            </div>
+            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'" tooltips tooltip-template="确认密码">
+              <span class="input-group-addon">
+                <i class="fa fa-check fa-fw"></i>
+              </span>
+              <input type="password" ng-model="password2" class="form-control" placeholder="确认密码"/>
+            </div>
+            <div class="notify fadein" ng-class="modalInfoFadein">
+              <div class="alert alert-warning">
+                <i class="fa fa-warning fa-fw"></i> {{modalInfoMsg}}
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="doJob()">
+                <i class="fa fa-pencil fa-fw"></i> 修改
+            </button>
+            <button class="btn btn-default" ng-click="cancel()">
+                <i class="fa fa-remove fa-fw"></i> 取消
+            </button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="aboutModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">关于 ModuleAB</h3>
+        </div>
+        <div class="modal-body">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">Home</a>
+                </li>
+                <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">Profile</a>
+                </li>
+                <li class=""><a href="#messages" data-toggle="tab" aria-expanded="false">Messages</a>
+                </li>
+                <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a>
+                </li>
+            </ul>
 
-
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+                    <h4>Home Tab</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+                <div class="tab-pane fade" id="profile">
+                    <h4>Profile Tab</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+                <div class="tab-pane fade" id="messages">
+                    <h4>Messages Tab</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+                <div class="tab-pane fade" id="settings">
+                    <h4>Settings Tab</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </div>
+       </div>
+       <div class="modal-footer">
+           <button class="btn btn-primary" ng-click="cancel()">
+               <i class="fa fa-remove fa-fw"></i> 关闭
+           </button>
+       </div>
+    </script>
 </head>
 
 <body>
@@ -93,19 +177,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">ModuleAB</a>
+                <a class="navbar-brand" href="javascript:void(0);">ModuleAB</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right" ng-controller="topNavBar">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                        <i class="fa fa-user fa-fw"></i> {{showName}} <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> {{session.show_name}} <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 用户设定</a>
+                        <li><a href="javascript:void(0);" ng-click="profile()"><i class="fa fa-user fa-fw"></i> 用户信息</a>
                         </li>
-                        <!-- li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a -->
+                        <li><a href="javascript:void(0);" ng-click="about()"><i class="fa fa-info-circle fa-fw"></i> 关于</a -->
                         </li>
                         <li class="divider"></li>
                         <li><a href="javascript:void(0);" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> 注销</a>

@@ -24,8 +24,8 @@ config(['$routeProvider', function($routeProvider) {
 config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;
 }]).
-controller("topNavBar", ['$scope', '$http', '$rootScope',
-  function($scope, $http, $rootScope) {
+controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
+  function($scope, $http, $uibModal, $rootScope) {
     $rootScope.dismiss = function() {
       $rootScope.fadein = '';
     };
@@ -35,7 +35,7 @@ controller("topNavBar", ['$scope', '$http', '$rootScope',
       method: "GET",
       url: "/api/v1/auth/check"
     }).then(function(response) {
-      $scope.showName = response.data.show_name;
+      $scope.session = response.data;
       $rootScope.loaded = true;
     }, function(response) {
       window.location.href = "/login";
@@ -54,5 +54,127 @@ controller("topNavBar", ['$scope', '$http', '$rootScope',
         }
       });
     };
+
+    $scope.about = function() {
+      $uibModal.open({
+        templateUrl: "aboutModal.html",
+        controller: "aboutModal"
+      });
+    };
+
+    $scope.profile = function() {
+      $uibModal.open({
+        templateUrl: "userProfileModal.html",
+        controller: "userProfileModal",
+        resolve: {
+          session: function() {
+            return $scope.session;
+          }
+        }
+      });
+    };
   }
-]);
+])
+
+.controller('aboutModal', function($scope, $uibModalInstance) {
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+})
+
+.controller('userProfileModal', function($scope, $http, $uibModalInstance,
+  session) {
+  $http({
+    method: "GET",
+    url: "/api/v1/users"
+  }).then(function(response) {
+    angular.forEach(response.data, function(v) {
+      if (session.name == v.loginname) {
+        $scope.user = v;
+        $scope.password2 = $scope.user.password;
+        return;
+      }
+    });
+  }, function(response) {
+    $rootScope.alertType = 'alert-warning';
+    $rootScope.fadein = 'fadein-opacity';
+    switch (response.status) {
+      case 401:
+        window.location.href = "/login";
+        break;
+      case 403:
+        $rootScope.failMessage = "没有权限";
+        break;
+      case 404:
+        $rootScope.failMessage = "无此用户";
+        break;
+      case 500:
+        $rootScope.failMessage = "服务器错误，见控制台输出";
+        console.log(response.data);
+        break;
+      default:
+        $rootScope.failMessage = "通讯故障";
+        break;
+    }
+  });
+
+  $scope.doJob = function() {
+    if ($scope.user.loginname == '') {
+      $scope.modalInfoFadein = "fadein-opacity";
+      $scope.modalInfoMsg = "登录名不能为空";
+      return;
+    }
+    if ($scope.user.name == '') {
+      $scope.modalInfoFadein = "fadein-opacity";
+      $scope.modalInfoMsg = "显示名不能为空";
+      return;
+    }
+    if (!$scope.user.password.match(/.{8,32}/)) {
+      $scope.modalInfoFadein = "fadein-opacity";
+      $scope.modalInfoMsg = "密码长度为8-32位！";
+      return;
+    }
+    if ($scope.user.password != $scope.password2) {
+      $scope.modalInfoFadein = "fadein-opacity";
+      $scope.modalInfoMsg = "两次输入的密码不一致！";
+      return;
+    }
+
+    $http({
+      method: "PUT",
+      url: "/api/v1/users/" + $scope.user.loginname,
+      data: $scope.user
+    }).then(function(response) {
+      $uibModalInstance.close(response.status);
+    }, function(response) {
+      $scope.modalInfoFadein = "fadein-opacity";
+      switch (response.status) {
+        case 400:
+          $scope.modalInfoMsg = "数据错误";
+          break;
+        case 401:
+          $scope.modalInfoMsg = "未登录";
+          window.location.href = "/login";
+          break;
+        case 403:
+          $scope.modalInfoMsg = "访问被拒绝";
+          break;
+        case 404:
+          $scope.modalInfoMsg = "无此用户";
+          break;
+        case 500:
+          $scope.modalInfoMsg = "服务器错误，见控制台输出";
+          console.log(response.data);
+          break;
+        default:
+          $scope.modalInfoMsg = "通讯故障";
+          break;
+      }
+    });
+    break;
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
