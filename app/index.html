@@ -117,31 +117,20 @@
             <h3 class="modal-title">关于 ModuleAB</h3>
         </div>
         <div class="modal-body">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#version" data-toggle="tab" aria-expanded="true">版本信息</a>
-                </li>
-                <li class=""><a href="#gpl" data-toggle="tab" aria-expanded="false">GPL许可</a>
-                </li>
-                <li class=""><a href="#libs" data-toggle="tab" aria-expanded="false">程序库</a>
-                </li>
-            </ul>
-
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane fade active in" id="version">
+            <uib-tabset>
+                <uib-tab index="0" heading="版本信息">
                     <h4>Module AB - {{version.code}}</h4>
                     <p>版本：{{version.build}}</p>
-                </div>
-                <div class="tab-pane fade" id="gpl">
+                </uib-tab>
+                <uib-tab index="1" heading="GPL 许可">
                     <h4>GPL v3</h4>
                     <pre class="scrollable">{{GPL}}</pre>
-                </div>
-                <div class="tab-pane fade" id="libs">
+                </uib-tab>
+                <uib-tab index="2" heading="程序库">
                     <h4>程序库</h4>
                     <p></p>
-                </div>
-            </div>
+                </uib-tab>
+            </uib-tabset>
        </div>
        <div class="modal-footer">
            <button class="btn btn-primary" ng-click="cancel()">
