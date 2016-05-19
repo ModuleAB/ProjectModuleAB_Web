@@ -78,7 +78,7 @@
             <th></th>
         </thead>
         <tbody>
-            <tr ng-repeat="host in hosts | orderBy: order">
+            <tr ng-repeat="host in hostSlice | orderBy: order">
                 <td class="table-td-padding"></td>
                 <td class="table-td-padding">{{host.name}}</td>
                 <td class="table-td-padding">{{host.ip}}</td>
@@ -89,9 +89,9 @@
                     </span>
                 </td>
                 <td class="table-td-padding">
-                    <p ng-repeat="p in host.path">
-                        {{p.path}}
-                    </p>
+                  <ul class="list-unstyled list-no-margin">
+                    <li ng-repeat="p in host.path">{{p.path}}</li>
+                  </ul>
                 </td>
                 <td style="text-align:right">
                     <button type="button" class="btn btn-default btn-xs" ng-click="hostEdit('modify', host)">
@@ -104,4 +104,12 @@
             </tr>
         </tbody>
     </table>
+    <div ng-show="hosts.length > numPerPage" class="align-to-right">
+      <uib-pagination
+        total-items="hosts.length"
+        max-size="5"
+        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+        ng-model="currentPage"
+        ></uib-pagination>
+    </div>
 </div>

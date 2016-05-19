@@ -11,12 +11,23 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
 
 .controller('hosts', ['$scope', '$http', '$uibModal', '$rootScope',
   function($scope, $http, $uibModal, $rootScope) {
+    $scope.currentPage = 1;
+    $scope.numPerPage = 50;
     $scope.hostsGet = function() {
       $http({
         method: "GET",
         url: "/api/v1/hosts"
       }).then(function(response) {
         $scope.hosts = response.data;
+        if ($scope.hosts.length > $scope.numPerPage) {
+          $scope.$watch("currentPage + numPerPage", function() {
+            var begin = ($scope.currentPage - 1) * $scope.numPerPage
+            var end = begin + $scope.numPerPage;
+            $scope.hostSlice = $scope.host.slice(begin, end)
+          });
+        } else {
+          $scope.hostSlice = $scope.hosts
+        }
       }, function(response) {});
     };
 
