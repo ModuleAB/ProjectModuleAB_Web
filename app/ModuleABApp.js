@@ -50,7 +50,7 @@ controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
         switch (response.status) {
           case 401:
             window.location.href = "/login";
-            break
+            break;
         }
       });
     };
@@ -76,7 +76,19 @@ controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
   }
 ])
 
-.controller('aboutModal', function($scope, $uibModalInstance) {
+.controller('aboutModal', function($scope, $http, $uibModalInstance) {
+  $http({
+    method: "GET",
+    url: "/gpl-3.0.txt"
+  }).then(function(response) {
+    $scope.GPL = response.data;
+  });
+  $http({
+    method: "GET",
+    url: "/version.json"
+  }).then(function(response) {
+    $scope.version = response.data;
+  });
   $scope.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };
@@ -86,15 +98,10 @@ controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
   session) {
   $http({
     method: "GET",
-    url: "/api/v1/users"
+    url: "/api/v1/users/" + session.name
   }).then(function(response) {
-    angular.forEach(response.data, function(v) {
-      if (session.name == v.loginname) {
-        $scope.user = v;
-        $scope.password2 = $scope.user.password;
-        return;
-      }
-    });
+    $scope.user = response.data[0];
+    $scope.password2 = $scope.user.password;
   }, function(response) {
     $rootScope.alertType = 'alert-warning';
     $rootScope.fadein = 'fadein-opacity';
@@ -171,7 +178,6 @@ controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
           break;
       }
     });
-    break;
   };
 
   $scope.cancel = function() {

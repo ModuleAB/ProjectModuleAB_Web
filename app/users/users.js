@@ -129,11 +129,13 @@ angular.module('ModuleAB.users', ['ngRoute'])
       $scope.type = "新增";
       $scope.jobType = "fa-plus";
       $scope.job = "新增"
+      $scope.isModifyMode = false;
       break;
     case 'modify':
       $scope.type = "修改";
       $scope.jobType = "fa-pencil";
       $scope.job = "修改";
+      $scope.isModifyMode = true;
       break;
   }
   $scope.modalInfoFadein = "";

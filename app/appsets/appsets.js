@@ -102,6 +102,7 @@ var app = angular.module('ModuleAB.appsets', ['ngRoute'])
     };
   }
   $scope.appSet = appSet;
+  $scope.oldName = appSet.name;
 
   switch (type) {
     case 'new':
@@ -158,7 +159,7 @@ var app = angular.module('ModuleAB.appsets', ['ngRoute'])
       case 'modify':
         $http({
           method: "PUT",
-          url: "/api/v1/appSets/" + $scope.appSet.name,
+          url: "/api/v1/appSets/" + $scope.oldName,
           data: $scope.appSet
         }).then(function(response) {
           $uibModalInstance.close(response.status);

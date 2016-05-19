@@ -26,6 +26,11 @@
   margin: auto;
 }
 
+.scrollable {
+  overflow-y: scroll;
+  height: 480px;
+}
+
 .notify > div{
   display: inline-block;
 }
