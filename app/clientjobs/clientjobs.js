@@ -1,75 +1,61 @@
 'use strict';
 
-angular.module('ModuleAB.policies', ['ngRoute'])
+angular.module('ModuleAB.clientjobs', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/policies', {
-    templateUrl: 'policies/policies.html',
-    controller: 'policies'
+  $routeProvider.when('/clientjob', {
+    templateUrl: 'clientjobs/clientjobs.html',
+    controller: 'clientJobs'
   });
 }])
 
-.controller('policies', ['$scope', '$http', '$uibModal', '$rootScope',
+.controller('clientJobs', ['$scope', '$http', '$uibModal', '$rootScope',
   function($scope, $http, $uibModal, $rootScope) {
-    $scope.types = {
-      1: "备份",
-      2: "归档"
-    };
-    $scope.actions = {
-      1: "转换为归档",
-      2: "删除"
-    };
-    $scope.policiesGet = function() {
+    $scope.pathsGet = function() {
       $http({
         method: "GET",
-        url: "/api/v1/policies"
+        url: "/api/v1/paths"
       }).then(function(response) {
-        $scope.policies = response.data;
+        $scope.paths = response.data;
       }, function(response) {});
     };
 
-    $scope.policiesGet();
+    $scope.pathsGet();
 
-    $scope.policyEdit = function(type, policy) {
+    $scope.pathEdit = function(type, path) {
       var modal = $uibModal.open({
-        templateUrl: 'policyModal.html',
-        controller: 'policyModal',
+        templateUrl: 'pathModal.html',
+        controller: 'pathModal',
         resolve: {
           type: function() {
             return type;
           },
-          policy: function() {
-            return policy;
-          },
-          types: function() {
-            return $scope.types
-          },
-          actions: function() {
-            return $scope.actions
+          path: function() {
+            return path;
           }
         }
       });
       modal.result.then(function(d) {
-        $scope.policiesGet();
+        $scope.pathsGet();
       });
     };
 
-    $scope.delete = function(policy) {
+    $scope.delete = function(path) {
       var modal = $uibModal.open({
         templateUrl: 'common/deleteModal.html',
-        controller: 'deleteAppSetModal',
+        controller: 'deletePathModal',
         resolve: {
-          policy: function() {
-            return policy;
+          path: function() {
+            return path;
           }
         }
       });
       modal.result.then(function(d) {
         $http({
           method: "DELETE",
-          url: "/api/v1/policies/" + policy.name
+          url: "/api/v1/paths/" + path.id
         }).then(function(response) {
-          $scope.policiesGet();
+          $scope.pathsGet();
         }, function(response) {
           $rootScope.alertType = 'alert-warning';
           $rootScope.fadein = 'fadein-opacity';
@@ -81,7 +67,7 @@ angular.module('ModuleAB.policies', ['ngRoute'])
               $rootScope.failMessage = "没有权限";
               break;
             case 404:
-              $rootScope.failMessage = "无此策略";
+              $rootScope.failMessage = "无此路径";
               break;
             case 500:
               $rootScope.failMessage = "服务器错误，见控制台输出";
@@ -97,53 +83,46 @@ angular.module('ModuleAB.policies', ['ngRoute'])
   }
 ])
 
-.controller('deleteAppSetModal', function($scope, $uibModalInstance, policy) {
+.controller('deletePathModal', function($scope, $uibModalInstance, path) {
   $scope.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };
   $scope.doDelete = function() {
     $uibModalInstance.close('delete');
   }
-  $scope.modalDeleteObjName = policy.name;
+  $scope.modalDeleteObjName = path.path;
 })
 
-.controller('policyModal', function($scope, $http, $uibModalInstance, type,
-  policy, types, actions) {
-  if (policy === undefined) {
-    policy = {
-      name: "",
-      description: "",
-      backupset: null,
-      appsets: [],
-      target: null,
-      action: null,
-      starttime: null,
-      endtime: null,
-      step: -1
+.controller('pathModal', function($scope, $http, $uibModalInstance, type,
+  path) {
+  if (path === undefined) {
+    path = {
+      path: "",
+      backupset: {
+        id: ""
+      },
+      appset: []
     };
   }
-  $scope.policy = policy;
-  $scope.types = types;
-  $scope.actions = actions;
-  $scope.oldName = policy.name;
-  $scope.startTime = policy.starttime / 86400;
-  $scope.endTime = policy.endtime == -1 ? policy.endtime : policy.endtime /
-    86400;
-  $scope.step = policy.step == -1 ? policy.step : policy.step / 86400;
+  $scope.path = path;
 
   $http({
     method: "GET",
     url: "/api/v1/backupSets"
   }).then(function(response) {
     $scope.backupSets = response.data;
-  }, function(response) {});
+  }, function(response) {
+    // do nothing
+  });
 
   $http({
     method: "GET",
     url: "/api/v1/appSets"
   }).then(function(response) {
     $scope.appSets = response.data;
-  }, function(response) {});
+  }, function(response) {
+    // do nothing
+  });
 
   switch (type) {
     case 'new':
@@ -159,107 +138,56 @@ angular.module('ModuleAB.policies', ['ngRoute'])
   }
 
   $scope.modalInfoFadein = "";
-  try {
-    $scope.selectedBackupSet = policy.backupset.id;
-  } catch (e) {
-    $scope.selectedBackupSet = "";
-  }
-  $scope.selectedAppSets = [];
-  $scope.$watch('policy.appsets', function(s) {
+  $scope.backupSetId = path.backupset.id;
+  $scope.appSetIds = [];
+  $scope.$watch('path.appset', function(s) {
     if (!s) {
       return;
     }
     angular.forEach(s, function(v) {
-      $scope.selectedAppSets.push(v.id);
+      $scope.appSetIds.push(v.id.toString());
     });
   });
+
   $scope.doJob = function() {
-    if ($scope.policy.name == '') {
+    if (!$scope.path.path.match(/^\/.*[^\/]$/)) {
       $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "名称不能为空";
+      $scope.modalInfoMsg = "路径应当是绝对路径，且不以'/'结尾";
       return;
     }
 
     angular.forEach($scope.backupSets, function(s0) {
-      if ($scope.selectedBackupSet == s0.id) {
-        $scope.policy.backupset = s0;
+      if ($scope.backupSetId == s0.id) {
+        $scope.path.backupset = s0;
         return;
       }
     });
-    try {
-      if ($scope.policy.backupset.id == "")
-        throw "bad";
-    } catch (e) {
-      $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "需要指定一个备份集";
-      return;
-    }
 
-    $scope.policy.appsets = [];
-    angular.forEach($scope.selectedAppSets, function(s0) {
+    $scope.path.appset = [];
+    angular.forEach($scope.appSetIds, function(s0) {
       angular.forEach($scope.appSets, function(s1) {
-        if (s1.id == s0)
-          $scope.policy.appsets.push(s1);
+        if (s1.id == s0) {
+          $scope.path.appset.push(s1);
+        }
       });
     });
-    if ($scope.policy.appsets.length == 0) {
+    if ($scope.path.backupset.id == "") {
       $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "需要指定至少一个应用集";
+      $scope.modalInfoMsg = "请指定一个备份集";
       return;
     }
-
-    if (isNaN($scope.startTime)) {
+    if ($scope.path.appset.length == 0) {
       $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "需要指定有效的起始时间";
+      $scope.modalInfoMsg = "请指定至少一个应用集";
       return;
     }
-    $scope.policy.starttime = parseInt($scope.startTime) * 86400;
-
-    if (isNaN($scope.endTime)) {
-      $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "需要指定有效的结束时间";
-      return;
-    }
-    $scope.policy.endtime = $scope.endTime == -1 ? parseInt(
-        $scope.endTime) :
-      parseInt($scope.endTime) * 86400;
-
-    if ($scope.policy.target == 0) {
-      $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "需要指定目标类型";
-      return;
-    }
-    if ($scope.policy.action == 0) {
-      $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "需要指定一个动作";
-      return;
-    }
-    if (isNaN($scope.step)) {
-      $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "需要指定有效的删除间隔";
-      return;
-    }
-    $scope.policy.step = $scope.step == -1 ? parseInt($scope.step) :
-      parseInt($scope.step) *
-      86400;
-
-    $scope.policy.target = parseInt($scope.policy.target);
-    $scope.policy.action = parseInt($scope.policy.action);
-
-    if ($scope.policy.target == 2 && $scope.policy.action == 1) {
-      $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "归档不适用此动作";
-      return;
-    }
-
-    console.log($scope.policy);
 
     switch (type) {
       case 'new':
         $http({
           method: "POST",
-          url: "/api/v1/policies",
-          data: $scope.policy
+          url: "/api/v1/paths",
+          data: $scope.path
         }).then(function(response) {
           $uibModalInstance.close(response.data.id);
         }, function(response) {
@@ -288,8 +216,8 @@ angular.module('ModuleAB.policies', ['ngRoute'])
       case 'modify':
         $http({
           method: "PUT",
-          url: "/api/v1/policies/" + $scope.oldName,
-          data: $scope.policy
+          url: "/api/v1/paths/" + $scope.path.id,
+          data: $scope.path
         }).then(function(response) {
           $uibModalInstance.close(response.status);
         }, function(response) {
@@ -306,7 +234,7 @@ angular.module('ModuleAB.policies', ['ngRoute'])
               $scope.modalInfoMsg = "访问被拒绝";
               break;
             case 404:
-              $scope.modalInfoMsg = "无此应用集";
+              $scope.modalInfoMsg = "无此路径";
               break;
             case 500:
               $scope.modalInfoMsg = "服务器错误，见控制台输出";

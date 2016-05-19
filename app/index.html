@@ -68,6 +68,7 @@
     <script src="/oss/oss.js"></script>
     <script src="/oas/oas.js"></script>
     <script src="/users/users.js"></script>
+    <script src="/clientjobs/clientjobs.js"></script>
     <script type="text/ng-template" id="userProfileModal.html">
         <div class="modal-header">
             <h3 class="modal-title">用户信息</h3>
@@ -203,7 +204,18 @@
                         </li>
 
                         <li>
-                            <a href="#/policies"><i class="fa fa-edit fa-fw"></i> 策略</a>
+                            <a href="javascript:void(0);">
+                              <i class="fa fa-edit fa-fw"></i> 策略
+                              <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level collapse">
+                              <li>
+                                <a href="#/policies">服务端策略</a>
+                              </li>
+                              <li>
+                                <a href="#/clientjob">客户端策略</a>
+                              </li>
+                            </ul>
                         </li>
 
                         <li>

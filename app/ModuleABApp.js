@@ -1,80 +1,86 @@
 'use strict';
 
 angular.module('ModuleAB', [
-  'ngRoute',
-  'ui.bootstrap',
-  '720kb.tooltips',
-  'angular-loading-bar',
-  'ngAnimate',
-  'ModuleAB.appsets',
-  'ModuleAB.records',
-  'ModuleAB.policies',
-  'ModuleAB.hosts',
-  'ModuleAB.paths',
-  'ModuleAB.backupsets',
-  'ModuleAB.oss',
-  'ModuleAB.oas',
-  'ModuleAB.users'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({
-    redirectTo: '/records'
-  });
-}]).
-config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
-  cfpLoadingBarProvider.includeSpinner = false;
-}]).
-controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
-  function($scope, $http, $uibModal, $rootScope) {
-    $rootScope.dismiss = function() {
-      $rootScope.fadein = '';
-    };
-    $rootScope.dismiss();
-
-    $http({
-      method: "GET",
-      url: "/api/v1/auth/check"
-    }).then(function(response) {
-      $scope.session = response.data;
-      $rootScope.loaded = true;
-    }, function(response) {
-      window.location.href = "/login";
+    'ngRoute',
+    'ui.bootstrap',
+    '720kb.tooltips',
+    'angular-loading-bar',
+    'ngAnimate',
+    'ModuleAB.appsets',
+    'ModuleAB.records',
+    'ModuleAB.policies',
+    'ModuleAB.hosts',
+    'ModuleAB.paths',
+    'ModuleAB.backupsets',
+    'ModuleAB.oss',
+    'ModuleAB.oas',
+    'ModuleAB.users',
+    'ModuleAB.clientjobs'
+  ])
+  .config(['$routeProvider', function($routeProvider) {
+    $routeProvider.otherwise({
+      redirectTo: '/records'
     });
-    $scope.logout = function() {
+  }])
+  .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
+  }])
+  .filter('int', function() {
+    return function(i) {
+      return i.replace(/(\.[0-9]+)/, '');
+    }
+  })
+  .controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
+    function($scope, $http, $uibModal, $rootScope) {
+      $rootScope.dismiss = function() {
+        $rootScope.fadein = '';
+      };
+      $rootScope.dismiss();
+
       $http({
         method: "GET",
-        url: "/api/v1/auth/logout"
+        url: "/api/v1/auth/check"
       }).then(function(response) {
-        window.location.href = "/login";
+        $scope.session = response.data;
+        $rootScope.loaded = true;
       }, function(response) {
-        switch (response.status) {
-          case 401:
-            window.location.href = "/login";
-            break;
-        }
+        window.location.href = "/login";
       });
-    };
-
-    $scope.about = function() {
-      $uibModal.open({
-        templateUrl: "aboutModal.html",
-        controller: "aboutModal"
-      });
-    };
-
-    $scope.profile = function() {
-      $uibModal.open({
-        templateUrl: "userProfileModal.html",
-        controller: "userProfileModal",
-        resolve: {
-          session: function() {
-            return $scope.session;
+      $scope.logout = function() {
+        $http({
+          method: "GET",
+          url: "/api/v1/auth/logout"
+        }).then(function(response) {
+          window.location.href = "/login";
+        }, function(response) {
+          switch (response.status) {
+            case 401:
+              window.location.href = "/login";
+              break;
           }
-        }
-      });
-    };
-  }
-])
+        });
+      };
+
+      $scope.about = function() {
+        $uibModal.open({
+          templateUrl: "aboutModal.html",
+          controller: "aboutModal"
+        });
+      };
+
+      $scope.profile = function() {
+        $uibModal.open({
+          templateUrl: "userProfileModal.html",
+          controller: "userProfileModal",
+          resolve: {
+            session: function() {
+              return $scope.session;
+            }
+          }
+        });
+      };
+    }
+  ])
 
 .controller('aboutModal', function($scope, $http, $uibModalInstance) {
   $http({

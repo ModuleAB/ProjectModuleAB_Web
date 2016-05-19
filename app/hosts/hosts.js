@@ -194,9 +194,8 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
       }
     });
     try {
-      if ($scope.host.appset.id == "") {
+      if ($scope.host.appset.id == "")
         throw "bad";
-      }
     } catch (e) {
       $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "需要指定一个应用集";
