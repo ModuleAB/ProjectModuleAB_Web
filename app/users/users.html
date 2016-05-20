@@ -12,30 +12,30 @@
             <h3 class="modal-title">{{type}}用户</h3>
         </div>
         <div class="modal-body">
-            <div class="form-group input-group" tooltips tooltip-template="登录名">
+            <div class="form-group input-group" uib-tooltip="登录名">
               <span class="input-group-addon">
                 <i class="fa fa-key fa-fw"></i></span>
               <input ng-model="user.loginname" class="form-control" placeholder="登录名" ng-disabled="isModifyMode"/>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="显示名">
+            <div class="form-group input-group" uib-tooltip="显示名">
               <span class="input-group-addon">
                 <i class="fa fa-user fa-fw"></i>
               </span>
               <input ng-model="user.name" class="form-control" placeholder="显示名"/>
             </div>
-            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'" tooltips tooltip-template="密码">
+            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'" uib-tooltip="密码">
               <span class="input-group-addon">
                 <i class="fa fa-lock fa-fw"></i>
               </span>
               <input type="password" ng-model="user.password" class="form-control" placeholder="密码"/>
             </div>
-            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'" tooltips tooltip-template="确认密码">
+            <div class="form-group input-group" ng-class="user.password == password2?'':'has-warning'" uib-tooltip="确认密码">
               <span class="input-group-addon">
                 <i class="fa fa-check fa-fw"></i>
               </span>
               <input type="password" ng-model="password2" class="form-control" placeholder="确认密码"/>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="角色">
+            <div class="form-group input-group" uib-tooltip="角色">
               <span class="input-group-addon">
                 <i class="fa fa-group fa-fw"></i>
               </span>

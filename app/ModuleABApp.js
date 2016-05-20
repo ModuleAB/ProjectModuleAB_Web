@@ -3,7 +3,6 @@
 angular.module('ModuleAB', [
     'ngRoute',
     'ui.bootstrap',
-    '720kb.tooltips',
     'angular-loading-bar',
     'ngAnimate',
     'ModuleAB.appsets',

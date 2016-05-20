@@ -12,37 +12,37 @@
             <h3 class="modal-title">查找</h3>
         </div>
         <div class="modal-body">
-            <div class="form-group input-group" tooltips tooltip-template="主机名">
+            <div class="form-group input-group" uib-tooltip="主机名">
               <span class="input-group-addon">
                 <i class="fa fa-laptop fa-fw"></i></span>
               <select ng-model="selectedHost" class="form-control" ng-options="host.name as host.name for host in hosts"></select>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="应用集">
+            <div class="form-group input-group" uib-tooltip="应用集">
               <span class="input-group-addon">
                 <i class="fa fa-cogs fa-fw"></i>
               </span>
               <select ng-model="selectedAppSet" class="form-control" ng-options="appSet.name as appSet.name for appSet in appSets"></select>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="备份集">
+            <div class="form-group input-group" uib-tooltip="备份集">
               <span class="input-group-addon">
                 <i class="fa fa-book fa-fw"></i>
               </span>
               <select class="form-control" ng-model="selectedBackupSet" ng-options="backupSet.name as backupSet.name for backupSet in backupSets"></select>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="路径">
+            <div class="form-group input-group" uib-tooltip="路径">
               <span class="input-group-addon">
                 <i class="fa fa-folder-open-o fa-fw"></i>
               </span>
               <select class="form-control" ng-model="selectedPath" ng-options="path.path as path.path for path in paths"></select>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="文件名">
+            <div class="form-group input-group" uib-tooltip="文件名">
               <span class="input-group-addon">
                 <i class="fa fa-folder-open-o fa-fw"></i>
               </span>
               <input class="form-control" ng-model="filename" placeholder="文件名"/>
             </div>
 
-            <div class="form-group input-group" tooltips tooltip-template="备份时间">
+            <div class="form-group input-group" uib-tooltip="备份时间">
                 <span class="input-group-addon">从</span>
                 <input class="form-control" ng-model="btStart"
                   uib-datepicker-popup
@@ -67,7 +67,7 @@
                   </button>
                 </span>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="归档时间">
+            <div class="form-group input-group" uib-tooltip="归档时间">
                 <span class="input-group-addon">从</span>
                 <input class="form-control" ng-model="atStart"
                   uib-datepicker-popup
@@ -92,7 +92,7 @@
                   </button>
                 </span>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="查询数量">
+            <div class="form-group input-group" uib-tooltip="查询数量">
                 <span class="input-group-addon">
                   <i class="fa fa-lock fa-fw"></i>
                 </span>

@@ -12,24 +12,24 @@
             <h3 class="modal-title">{{type}}备份集</h3>
         </div>
         <div class="modal-body">
-            <div class="form-group input-group" tooltips tooltip-template="名称">
+            <div class="form-group input-group"  uib-tooltip="名称">
               <span class="input-group-addon">
                 <i class="fa fa-edit fa-fw"></i></span>
               <input ng-model="backupSet.name" class="form-control" placeholder="名称"/>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="描述">
+            <div class="form-group input-group"  uib-tooltip="描述">
               <span class="input-group-addon">
                 <i class="fa fa-tags fa-fw"></i>
               </span>
               <input ng-model="backupSet.description" class="form-control" placeholder="描述"/>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="OSS">
+            <div class="form-group input-group"  uib-tooltip="OSS">
               <span class="input-group-addon">
                 <i class="fa fa-hdd-o fa-fw"></i>
               </span>
               <select ng-model="OssId" class="form-control" ng-options="oss.id as oss.bucket for oss in osss"></select>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="OAS">
+            <div class="form-group input-group"  uib-tooltip="OAS">
               <span class="input-group-addon">
                 <i class="fa fa-save fa-fw"></i>
               </span>

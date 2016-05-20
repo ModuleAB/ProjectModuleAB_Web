@@ -12,58 +12,58 @@
             <h3 class="modal-title">{{type}}策略</h3>
         </div>
         <div class="modal-body">
-            <div class="form-group input-group" tooltips tooltip-template="名称">
+            <div class="form-group input-group" uib-tooltip="名称">
               <span class="input-group-addon">
                 <i class="fa fa-edit fa-fw"></i></span>
               <input ng-model="policy.name" class="form-control" placeholder="名称"/>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="描述">
+            <div class="form-group input-group" uib-tooltip="描述">
               <span class="input-group-addon">
                 <i class="fa fa-tags fa-fw"></i>
               </span>
               <input ng-model="policy.description" class="form-control" placeholder="描述"/>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="所属备份集">
+            <div class="form-group input-group" uib-tooltip="所属备份集">
               <span class="input-group-addon">
                 <i class="fa fa-book fa-fw"></i>
               </span>
               <select ng-model="selectedBackupSet" class="form-control" ng-options="backupSet.id as backupSet.name for backupSet in backupSets"></select>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="所属应用集">
+            <div class="form-group input-group" uib-tooltip="所属应用集">
               <span class="input-group-addon">
                 <i class="fa fa-cogs fa-fw"></i>
               </span>
               <select multiple ng-model="selectedAppSets" class="form-control" ng-options="appSet.id as appSet.name for appSet in appSets"></select>
             </div>
 
-            <div class="form-group input-group" tooltips tooltip-template="起始时间">
+            <div class="form-group input-group" uib-tooltip="起始时间">
               <span class="input-group-addon">
                 <i class="fa fa-clock-o fa-fw"></i></span>
               <input type="number" ng-model="startTime" class="form-control" placeholder="起始时间（0 为当前）"/>
               <span class="input-group-addon">天前</span>
             </div>
 
-            <div class="form-group input-group" tooltips tooltip-template="结束时间">
+            <div class="form-group input-group" uib-tooltip="结束时间">
               <span class="input-group-addon">
                 <i class="fa fa-clock-o fa-fw"></i></span>
               <input type="number" ng-model="endTime" class="form-control" placeholder="结束时间（-1 为不限制）"/>
               <span class="input-group-addon">天前</span>
             </div>
 
-            <div class="form-group input-group" tooltips tooltip-template="目标类型">
+            <div class="form-group input-group" uib-tooltip="目标类型">
               <span class="input-group-addon">
                 <i class="fa fa-table fa-fw"></i>
               </span>
               <select ng-model="policy.target" class="form-control" ng-options="toInt(k) as v for (k, v) in types"></select>
             </div>
-            <div class="form-group input-group" tooltips tooltip-template="执行动作">
+            <div class="form-group input-group" uib-tooltip="执行动作">
               <span class="input-group-addon">
                 <i class="fa fa-wrench fa-fw"></i>
               </span>
               <select ng-model="policy.action" class="form-control" ng-options="toInt(k) as v for (k, v) in actions"></select>
             </div>
 
-            <div class="form-group input-group" ng-show="policy.action == 2" tooltips tooltip-template="删除间隔（任务类型为删除时生效）">
+            <div class="form-group input-group" ng-show="policy.action == 2" uib-tooltip="删除间隔（任务类型为删除时生效）">
               <span class="input-group-addon">
                 <i class="fa fa-clock-o fa-fw"></i></span>
               <input type="number" ng-model="step" class="form-control" placeholder="删除间隔（0 为全部删除，-1 为全不删除）"/>
