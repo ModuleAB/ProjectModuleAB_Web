@@ -15,6 +15,10 @@
   z-index: 10000;
 }
 
+.tooltips {
+  width: 100%;
+}
+
 .notify {
   position: fixed;
   left: 0;

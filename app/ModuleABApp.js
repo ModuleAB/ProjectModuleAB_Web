@@ -85,7 +85,7 @@ angular.module('ModuleAB', [
 .controller('aboutModal', function($scope, $http, $uibModalInstance) {
   $http({
     method: "GET",
-    url: "/gpl-3.0.txt"
+    url: "/LICENSE"
   }).then(function(response) {
     $scope.GPL = response.data;
   });
