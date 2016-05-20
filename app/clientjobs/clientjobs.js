@@ -11,51 +11,57 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
 
 .controller('clientJobs', ['$scope', '$http', '$uibModal', '$rootScope',
   function($scope, $http, $uibModal, $rootScope) {
-    $scope.pathsGet = function() {
+    $scope.actions = {
+      1: "删除"
+    }
+    $scope.clientJobsGet = function() {
       $http({
         method: "GET",
-        url: "/api/v1/paths"
+        url: "/api/v1/clientJobs"
       }).then(function(response) {
-        $scope.paths = response.data;
+        $scope.clientJobs = response.data;
       }, function(response) {});
     };
 
-    $scope.pathsGet();
+    $scope.clientJobsGet();
 
-    $scope.pathEdit = function(type, path) {
+    $scope.clientJobEdit = function(type, clientJob) {
       var modal = $uibModal.open({
-        templateUrl: 'pathModal.html',
-        controller: 'pathModal',
+        templateUrl: 'clientJobModal.html',
+        controller: 'clientJobModal',
         resolve: {
           type: function() {
             return type;
           },
-          path: function() {
-            return path;
+          clientJob: function() {
+            return clientJob;
+          },
+          actions: function() {
+            return $scope.actions;
           }
         }
       });
       modal.result.then(function(d) {
-        $scope.pathsGet();
+        $scope.clientJobsGet();
       });
     };
 
-    $scope.delete = function(path) {
+    $scope.delete = function(clientJob) {
       var modal = $uibModal.open({
         templateUrl: 'common/deleteModal.html',
-        controller: 'deletePathModal',
+        controller: 'deleteClientJobModal',
         resolve: {
-          path: function() {
-            return path;
+          clientJob: function() {
+            return clientJob;
           }
         }
       });
       modal.result.then(function(d) {
         $http({
           method: "DELETE",
-          url: "/api/v1/paths/" + path.id
+          url: "/api/v1/clientJobs/" + clientJob.id
         }).then(function(response) {
-          $scope.pathsGet();
+          $scope.clientJobsGet();
         }, function(response) {
           $rootScope.alertType = 'alert-warning';
           $rootScope.fadein = 'fadein-opacity';
@@ -67,7 +73,7 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
               $rootScope.failMessage = "没有权限";
               break;
             case 404:
-              $rootScope.failMessage = "无此路径";
+              $rootScope.failMessage = "无此策略";
               break;
             case 500:
               $rootScope.failMessage = "服务器错误，见控制台输出";
@@ -83,44 +89,54 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
   }
 ])
 
-.controller('deletePathModal', function($scope, $uibModalInstance, path) {
+.controller('deleteClientJobModal', function($scope, $uibModalInstance,
+  clientJob) {
   $scope.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };
   $scope.doDelete = function() {
     $uibModalInstance.close('delete');
   }
-  $scope.modalDeleteObjName = path.path;
+  $scope.modalDeleteObjName = clientJob.id;
 })
 
-.controller('pathModal', function($scope, $http, $uibModalInstance, type,
-  path) {
-  if (path === undefined) {
-    path = {
-      path: "",
-      backupset: {
-        id: ""
-      },
-      appset: []
+.controller('clientJobModal', function($scope, $http, $uibModalInstance, type,
+  clientJob, actions) {
+  $scope.toInt = function(i) {
+    return parseInt(i);
+  }
+  $scope.actions = actions;
+  if (clientJob === undefined) {
+    clientJob = {
+      period: 0,
+      type: 1,
+      reservedtime: 0,
+      hosts: [],
+      paths: []
     };
   }
-  $scope.path = path;
+  $scope.clientJob = clientJob;
+  $scope.clientJobperiod = clientJob.period / 86400;
+  $scope.clientJobreservedtime = clientJob.reservedtime / 86400;
 
   $http({
     method: "GET",
-    url: "/api/v1/backupSets"
+    url: "/api/v1/hosts"
   }).then(function(response) {
-    $scope.backupSets = response.data;
+    $scope.hosts = response.data;
   }, function(response) {
     // do nothing
   });
 
   $http({
     method: "GET",
-    url: "/api/v1/appSets"
+    url: "/api/v1/paths"
   }).then(function(response) {
-    $scope.appSets = response.data;
+    $scope.paths = response.data;
   }, function(response) {
+    if (response.status == 404) {
+      $scope.paths = response.data;
+    }
     // do nothing
   });
 
@@ -138,47 +154,68 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
   }
 
   $scope.modalInfoFadein = "";
-  $scope.backupSetId = path.backupset.id;
-  $scope.appSetIds = [];
-  $scope.$watch('path.appset', function(s) {
+  $scope.selectedHosts = [];
+  $scope.$watch('clientJob.hosts', function(s) {
     if (!s) {
       return;
     }
     angular.forEach(s, function(v) {
-      $scope.appSetIds.push(v.id.toString());
+      $scope.selectedHosts.push(v.id.toString());
+    });
+  });
+  $scope.selectedPaths = [];
+  $scope.$watch('clientJob.paths', function(s) {
+    if (!s) {
+      return;
+    }
+    angular.forEach(s, function(v) {
+      $scope.selectedPaths.push(v.id.toString());
     });
   });
 
   $scope.doJob = function() {
-    if (!$scope.path.path.match(/^\/.*[^\/]$/)) {
+    $scope.clientJob.period = parseInt($scope.clientJobperiod * 86400);
+    if ($scope.clientJob.period == 0) {
       $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "路径应当是绝对路径，且不以'/'结尾";
+      $scope.modalInfoMsg = "执行周期不能为 0";
       return;
     }
 
-    angular.forEach($scope.backupSets, function(s0) {
-      if ($scope.backupSetId == s0.id) {
-        $scope.path.backupset = s0;
-        return;
-      }
-    });
+    $scope.clientJob.reservedtime = parseInt($scope.clientJobreservedtime *
+      86400);
+    if ($scope.clientJob.reservedtime == 0) {
+      $scope.modalInfoFadein = "fadein-opacity";
+      $scope.modalInfoMsg = "保留时长不能为 0";
+      return;
+    }
 
-    $scope.path.appset = [];
-    angular.forEach($scope.appSetIds, function(s0) {
-      angular.forEach($scope.appSets, function(s1) {
-        if (s1.id == s0) {
-          $scope.path.appset.push(s1);
-        }
+    $scope.clientJob.hosts = [];
+    angular.forEach($scope.selectedHosts,
+      function(s0) {
+        angular.forEach($scope.hosts, function(s1) {
+          if (s1.id == s0) {
+            $scope.clientJob.hosts.push(s1);
+          }
+        });
       });
-    });
-    if ($scope.path.backupset.id == "") {
+    if ($scope.clientJob.hosts.length == 0) {
       $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "请指定一个备份集";
+      $scope.modalInfoMsg = "请绑定至少一个主机";
       return;
     }
-    if ($scope.path.appset.length == 0) {
+
+    $scope.clientJob.paths = [];
+    angular.forEach($scope.selectedPaths,
+      function(s0) {
+        angular.forEach($scope.paths, function(s1) {
+          if (s1.id == s0) {
+            $scope.clientJob.paths.push(s1);
+          }
+        });
+      });
+    if ($scope.clientJob.paths.length == 0) {
       $scope.modalInfoFadein = "fadein-opacity";
-      $scope.modalInfoMsg = "请指定至少一个应用集";
+      $scope.modalInfoMsg = "请绑定至少一个路径";
       return;
     }
 
@@ -186,8 +223,8 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
       case 'new':
         $http({
           method: "POST",
-          url: "/api/v1/paths",
-          data: $scope.path
+          url: "/api/v1/clientJobs",
+          data: $scope.clientJob
         }).then(function(response) {
           $uibModalInstance.close(response.data.id);
         }, function(response) {
@@ -216,8 +253,8 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
       case 'modify':
         $http({
           method: "PUT",
-          url: "/api/v1/paths/" + $scope.path.id,
-          data: $scope.path
+          url: "/api/v1/clientJobs/" + $scope.clientJob.id,
+          data: $scope.clientJob
         }).then(function(response) {
           $uibModalInstance.close(response.status);
         }, function(response) {

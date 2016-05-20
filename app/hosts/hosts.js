@@ -12,7 +12,7 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
 .controller('hosts', ['$scope', '$http', '$uibModal', '$rootScope',
   function($scope, $http, $uibModal, $rootScope) {
     $scope.currentPage = 1;
-    $scope.numPerPage = 50;
+    $scope.numPerPage = 15;
     $scope.hostsGet = function() {
       $http({
         method: "GET",
@@ -23,7 +23,7 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
           $scope.$watch("currentPage + numPerPage", function() {
             var begin = ($scope.currentPage - 1) * $scope.numPerPage
             var end = begin + $scope.numPerPage;
-            $scope.hostSlice = $scope.host.slice(begin, end)
+            $scope.hostSlice = $scope.hosts.slice(begin, end)
           });
         } else {
           $scope.hostSlice = $scope.hosts

@@ -109,6 +109,10 @@ angular.module('ModuleAB.policies', ['ngRoute'])
 
 .controller('policyModal', function($scope, $http, $uibModalInstance, type,
   policy, types, actions) {
+  $scope.toInt = function(i) {
+    return parseInt(i);
+  }
+
   if (policy === undefined) {
     policy = {
       name: "",

@@ -84,9 +84,11 @@
                 <td class="table-td-padding">{{host.ip}}</td>
                 <td class="table-td-padding">{{host.appset.name}}</td>
                 <td class="table-td-padding">
-                    <span ng-repeat="backupSet in host.backupsets">
-                        {{backupSet.name}},
-                    </span>
+                  <ul class="list-unstyled list-no-margin">
+                    <li ng-repeat="backupSet in host.backupsets">
+                        {{backupSet.name}}
+                    </li>
+                  </ul>
                 </td>
                 <td class="table-td-padding">
                   <ul class="list-unstyled list-no-margin">
@@ -105,11 +107,13 @@
         </tbody>
     </table>
     <div ng-show="hosts.length > numPerPage" class="align-to-right">
-      <uib-pagination
-        total-items="hosts.length"
-        max-size="5"
-        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-        ng-model="currentPage"
-        ></uib-pagination>
+        <uib-pagination
+          total-items="hosts.length"
+          max-size="5"
+          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+          ng-model="currentPage"
+          boundary-links="true"
+          items-per-page="numPerPage"
+          ></uib-pagination>
     </div>
 </div>

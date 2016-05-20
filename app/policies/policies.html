@@ -39,14 +39,14 @@
             <div class="form-group input-group" tooltips tooltip-template="起始时间">
               <span class="input-group-addon">
                 <i class="fa fa-clock-o fa-fw"></i></span>
-              <input ng-model="startTime" class="form-control" placeholder="起始时间（0 为当前）"/>
+              <input type="number" ng-model="startTime" class="form-control" placeholder="起始时间（0 为当前）"/>
               <span class="input-group-addon">天前</span>
             </div>
 
             <div class="form-group input-group" tooltips tooltip-template="结束时间">
               <span class="input-group-addon">
                 <i class="fa fa-clock-o fa-fw"></i></span>
-              <input ng-model="endTime" class="form-control" placeholder="结束时间（-1 为不限制）"/>
+              <input type="number" ng-model="endTime" class="form-control" placeholder="结束时间（-1 为不限制）"/>
               <span class="input-group-addon">天前</span>
             </div>
 
@@ -54,19 +54,19 @@
               <span class="input-group-addon">
                 <i class="fa fa-table fa-fw"></i>
               </span>
-              <select ng-model="policy.target" class="form-control" ng-options="k as v for (k, v) in types"></select>
+              <select ng-model="policy.target" class="form-control" ng-options="toInt(k) as v for (k, v) in types"></select>
             </div>
             <div class="form-group input-group" tooltips tooltip-template="执行动作">
               <span class="input-group-addon">
                 <i class="fa fa-wrench fa-fw"></i>
               </span>
-              <select ng-model="policy.action" class="form-control" ng-options="k as v for (k, v) in actions"></select>
+              <select ng-model="policy.action" class="form-control" ng-options="toInt(k) as v for (k, v) in actions"></select>
             </div>
 
             <div class="form-group input-group" ng-show="policy.action == 2" tooltips tooltip-template="删除间隔（任务类型为删除时生效）">
               <span class="input-group-addon">
                 <i class="fa fa-clock-o fa-fw"></i></span>
-              <input ng-model="step" class="form-control" placeholder="删除间隔（0 为全部删除，-1 为全不删除）"/>
+              <input type="number" ng-model="step" class="form-control" placeholder="删除间隔（0 为全部删除，-1 为全不删除）"/>
               <span class="input-group-addon">天</span>
             </div>
 
