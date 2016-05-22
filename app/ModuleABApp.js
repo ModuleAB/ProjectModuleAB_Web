@@ -90,7 +90,7 @@ angular.module('ModuleAB', [
   });
   $http({
     method: "GET",
-    url: "/version.json"
+    url: "/api/v1/version"
   }).then(function(response) {
     $scope.version = response.data;
   });
