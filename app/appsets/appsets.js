@@ -17,7 +17,11 @@ var app = angular.module('ModuleAB.appsets', ['ngRoute'])
         url: "/api/v1/appSets"
       }).then(function(response) {
         $scope.appSets = response.data;
-      }, function(response) {});
+      }, function(response) {
+        if (response.status == 404) {
+          $scope.appSets = null;
+        }
+      });
     };
 
     $scope.appSetsGet();

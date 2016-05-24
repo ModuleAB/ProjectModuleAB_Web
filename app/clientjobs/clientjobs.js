@@ -20,7 +20,11 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
         url: "/api/v1/clientJobs"
       }).then(function(response) {
         $scope.clientJobs = response.data;
-      }, function(response) {});
+      }, function(response) {
+        if (response.status == 404) {
+          $scope.clientJobs = null;
+        }
+      });
     };
 
     $scope.clientJobsGet();

@@ -17,7 +17,11 @@ angular.module('ModuleAB.backupsets', ['ngRoute'])
         url: "/api/v1/backupSets"
       }).then(function(response) {
         $scope.backupSets = response.data;
-      }, function(response) {});
+      }, function(response) {
+        if (response.status == 404) {
+          $scope.backupSets = null;
+        }
+      });
     };
 
     $scope.backupSetsGet();

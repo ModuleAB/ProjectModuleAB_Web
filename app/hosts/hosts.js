@@ -28,7 +28,11 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
         } else {
           $scope.hostSlice = $scope.hosts
         }
-      }, function(response) {});
+      }, function(response) {
+        if (response.status == 404) {
+          $scope.hostSlice = null;
+        }
+      });
     };
 
     $scope.hostsGet();

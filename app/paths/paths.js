@@ -17,7 +17,11 @@ angular.module('ModuleAB.paths', ['ngRoute'])
         url: "/api/v1/paths"
       }).then(function(response) {
         $scope.paths = response.data;
-      }, function(response) {});
+      }, function(response) {
+        if (response.status == 404) {
+          $scope.paths = null;
+        }
+      });
     };
 
     $scope.pathsGet();

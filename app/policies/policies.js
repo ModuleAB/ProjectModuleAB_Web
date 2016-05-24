@@ -25,7 +25,11 @@ angular.module('ModuleAB.policies', ['ngRoute'])
         url: "/api/v1/policies"
       }).then(function(response) {
         $scope.policies = response.data;
-      }, function(response) {});
+      }, function(response) {
+        if (response.status == 404) {
+          $scope.policies = null;
+        }
+      });
     };
 
     $scope.policiesGet();

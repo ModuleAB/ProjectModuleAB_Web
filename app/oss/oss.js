@@ -17,7 +17,11 @@ angular.module('ModuleAB.oss', ['ngRoute'])
         url: "/api/v1/oss"
       }).then(function(response) {
         $scope.osss = response.data;
-      }, function(response) {});
+      }, function(response) {
+        if (response.status == 404) {
+          $scope.oass = null;
+        }
+      });
     };
 
     $scope.osssGet();
