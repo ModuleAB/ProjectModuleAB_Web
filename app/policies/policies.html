@@ -35,6 +35,18 @@
               </span>
               <select multiple ng-model="selectedAppSets" class="form-control" ng-options="appSet.id as appSet.name for appSet in appSets"></select>
             </div>
+            <div class="form-group input-group" uib-tooltip="绑定主机">
+              <span class="input-group-addon">
+                <i class="fa fa-laptop fa-fw"></i>
+              </span>
+              <select multiple ng-model="selectedHosts" class="form-control" ng-options="host.id as host.name for host in hosts"></select>
+            </div>
+            <div class="form-group input-group" uib-tooltip="绑定路径">
+              <span class="input-group-addon">
+                <i class="fa fa-folder fa-fw"></i>
+              </span>
+              <select multiple ng-model="selectedPaths" class="form-control" ng-options="path.id as path.path for path in paths"></select>
+            </div>
 
             <div class="form-group input-group" uib-tooltip="起始时间">
               <span class="input-group-addon">
@@ -97,6 +109,8 @@
             <th>描述</th>
             <th>所属备份集</th>
             <th>所属应用集</th>
+            <th>绑定主机</th>
+            <th>绑定路径</th>
             <th>起始时间</th>
             <th>结束时间</th>
             <th>目标类型</th>
@@ -111,9 +125,25 @@
                 <td class="table-td-padding">{{policy.description}}</td>
                 <td class="table-td-padding">{{policy.backupset.name}}</td>
                 <td class="table-td-padding">
-                  <span ng-repeat="appset in policy.appsets">
-                    {{appset.name}},
-                  </span>
+                  <ul class="list-nostyle list-no-margin">
+                    <li ng-repeat="appset in policy.appsets">
+                      {{appset.name}},
+                    </li>
+                  </ul>
+                </td>
+                <td class="table-td-padding">
+                  <ul class="list-nostyle list-no-margin">
+                    <li ng-repeat="host in policy.hosts">
+                      {{host.name}},
+                    </li>
+                  </ul>
+                </td>
+                <td class="table-td-padding">
+                  <ul class="list-nostyle list-no-margin">
+                    <li ng-repeat="path in policy.paths">
+                      {{path.path}},
+                    </li>
+                  </ul>
                 </td>
                 <td class="table-td-padding">{{policy.starttime == 0?'现在':(policy.starttime / 86400).toString()+' 天前' | int}}</td>
                 <td class="table-td-padding">{{policy.endtime == -1?'不限':(policy.endtime / 86400).toString()+' 天前' | int}}</td>

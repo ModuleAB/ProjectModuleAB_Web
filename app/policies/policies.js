@@ -123,6 +123,8 @@ angular.module('ModuleAB.policies', ['ngRoute'])
       description: "",
       backupset: null,
       appsets: [],
+      paths: [],
+      hosts: [],
       target: null,
       action: null,
       starttime: null,
@@ -153,6 +155,20 @@ angular.module('ModuleAB.policies', ['ngRoute'])
     $scope.appSets = response.data;
   }, function(response) {});
 
+  $http({
+    method: "GET",
+    url: "/api/v1/hosts"
+  }).then(function(response) {
+    $scope.hosts = response.data;
+  }, function(response) {});
+
+  $http({
+    method: "GET",
+    url: "/api/v1/paths"
+  }).then(function(response) {
+    $scope.paths = response.data;
+  }, function(response) {});
+
   switch (type) {
     case 'new':
       $scope.type = "新增";
@@ -179,6 +195,22 @@ angular.module('ModuleAB.policies', ['ngRoute'])
     }
     angular.forEach(s, function(v) {
       $scope.selectedAppSets.push(v.id);
+    });
+  });
+  $scope.$watch('policy.hosts', function(s) {
+    if (!s) {
+      return;
+    }
+    angular.forEach(s, function(v) {
+      $scope.selectedHosts.push(v.id);
+    });
+  });
+  $scope.$watch('policy.paths', function(s) {
+    if (!s) {
+      return;
+    }
+    angular.forEach(s, function(v) {
+      $scope.selectedPaths.push(v.id);
     });
   });
   $scope.doJob = function() {
@@ -213,6 +245,32 @@ angular.module('ModuleAB.policies', ['ngRoute'])
     if ($scope.policy.appsets.length == 0) {
       $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "需要指定至少一个应用集";
+      return;
+    }
+
+    $scope.policy.hosts = [];
+    angular.forEach($scope.selectedHosts, function(s0) {
+      angular.forEach($scope.hosts, function(s1) {
+        if (s1.id == s0)
+          $scope.policy.hosts.push(s1);
+      });
+    });
+    if ($scope.policy.hosts.length == 0) {
+      $scope.modalInfoFadein = "fadein-opacity";
+      $scope.modalInfoMsg = "需要绑定至少一个主机";
+      return;
+    }
+
+    $scope.policy.paths = [];
+    angular.forEach($scope.selectedPaths, function(s0) {
+      angular.forEach($scope.paths, function(s1) {
+        if (s1.id == s0)
+          $scope.policy.paths.push(s1);
+      });
+    });
+    if ($scope.policy.paths.length == 0) {
+      $scope.modalInfoFadein = "fadein-opacity";
+      $scope.modalInfoMsg = "需要绑定至少一个路径";
       return;
     }
 
