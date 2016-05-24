@@ -15,6 +15,7 @@ angular.module('ModuleAB.records', ['ngRoute'])
       1: "备份",
       2: "归档"
     };
+    $scope.order = '-backuptime';
     $scope.currentPage = 1;
     $scope.numPerPage = 15;
     $scope.recordsGet = function(query) {
