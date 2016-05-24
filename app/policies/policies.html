@@ -78,7 +78,7 @@
             <div class="form-group input-group" ng-show="policy.action == 2" uib-tooltip="删除间隔（任务类型为删除时生效）">
               <span class="input-group-addon">
                 <i class="fa fa-clock-o fa-fw"></i></span>
-              <input type="number" ng-model="step" class="form-control" placeholder="删除间隔（0 为全部删除，-1 为全不删除）"/>
+              <input type="number" ng-model="step" class="form-control" placeholder="删除间隔（0 为全部保留，-1 为全部删除）"/>
               <span class="input-group-addon">天</span>
             </div>
 
@@ -151,8 +151,8 @@
                 <td class="table-td-padding">{{actions[policy.action]}}</td>
                 <td class="table-td-padding">{{
                   policy.action == 2?(
-                    policy.step == -1?'全部保留':(
-                      policy.step == 0?'全部删除':(
+                    policy.step == 0?'全部保留':(
+                      policy.step == -1?'全部删除':(
                         policy.step/86400
                       ).toString()+' 天'
                     )

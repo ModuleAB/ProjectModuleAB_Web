@@ -171,8 +171,26 @@
                   {{types[record.type]}}
                 </td>
                 <td class="table-td-padding">{{record.archiveid.slice(0, 16)}}</td>
-                <td class="table-td-padding">{{record.backuptime.indexOf('+') != -1?record.backuptime.replace('+', '-'): record.backuptime.indexOf('-')!=-1?record.backuptime.replace('-', '+'):record.backuptime|date:'yyyy-MM-dd HH:mm:ss':'Z'}}</td>
-                <td class="table-td-padding">{{record.archivedtime=='0001-01-01T00:00:00Z'?'-':record.archivedtime.indexOf('+') != -1?record.archivedtime.replace('+', '-'):record.archivedtime.indexOf('-') != -1?record.archivedtime.replace('-', '+'):record.archivedtime|date: 'yyyy-MM-dd HH:mm:ss':'Z'}}</td>
+                <td class="table-td-padding">{{
+                  record.backuptime.indexOf('+') != -1?(
+                    record.backuptime.replace('+', '-'):(
+                      record.backuptime.indexOf('-')!=-1?(
+                        record.backuptime.replace('-', '+'):
+                          record.backuptime)
+                        )
+                      )|date:'yyyy-MM-dd HH:mm:ss':'Z'}}</td>
+                <td class="table-td-padding">{{
+                  record.archivedtime=='0001-01-01T00:00:00Z'?(
+                    '-':(
+                      record.archivedtime.indexOf('+') != -1?(
+                        record.archivedtime.replace('+', '-'):(
+                          record.archivedtime.indexOf('-') != -1?(
+                            record.archivedtime.replace('-', '+'):
+                              record.archivedtime)
+                            )
+                          )
+                        )
+                      )|date: 'yyyy-MM-dd HH:mm:ss':'Z'}}</td>
                 <td style="text-align:right">
                     <button type="button" class="btn btn-default btn-xs" ng-click="recover(record)">
                         <i class="fa fa-download fa-fw"></i> 恢复

@@ -129,7 +129,7 @@ angular.module('ModuleAB.policies', ['ngRoute'])
       action: null,
       starttime: null,
       endtime: null,
-      step: -1
+      step: 0
     };
   }
   $scope.policy = policy;
