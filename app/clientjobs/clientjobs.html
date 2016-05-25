@@ -79,9 +79,9 @@
         <tbody>
             <tr ng-repeat="clientJob in clientJobs">
                 <td class="table-td-padding"></td>
-                <td class="table-td-padding">{{clientJob.period/86400}} 天</td>
+                <td class="table-td-padding">{{(clientJob.period/86400).toFixed()}} 天</td>
                 <td class="table-td-padding">{{actions[clientJob.type]}}</td>
-                <td class="table-td-padding">{{clientJob.reservedtime/86400}} 天</td>
+                <td class="table-td-padding">{{(clientJob.reservedtime/86400).toFixed()}} 天</td>
                 <td class="table-td-padding">
                   <ul class="list-unstyled list-no-margin">
                     <li ng-repeat="h in clientJob.hosts">{{h.name}}</li>

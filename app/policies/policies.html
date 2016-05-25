@@ -145,8 +145,8 @@
                     </li>
                   </ul>
                 </td>
-                <td class="table-td-padding">{{policy.starttime == 0?'现在':(policy.starttime / 86400).toString()+' 天前' | int}}</td>
-                <td class="table-td-padding">{{policy.endtime == -1?'不限':(policy.endtime / 86400).toString()+' 天前' | int}}</td>
+                <td class="table-td-padding">{{policy.starttime == 0?'现在':(policy.starttime / 86400).toFixed()+' 天前' | int}}</td>
+                <td class="table-td-padding">{{policy.endtime == -1?'不限':(policy.endtime / 86400).toFixed()+' 天前' | int}}</td>
                 <td class="table-td-padding">{{types[policy.target]}}</td>
                 <td class="table-td-padding">{{actions[policy.action]}}</td>
                 <td class="table-td-padding">{{
@@ -154,7 +154,7 @@
                     policy.step == 0?'全部保留':(
                       policy.step == -1?'全部删除':(
                         policy.step/86400
-                      ).toString()+' 天'
+                      ).toFixed()+' 天'
                     )
                   ):'-' | int
                 }}</td>
