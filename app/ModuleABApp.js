@@ -26,7 +26,7 @@ angular.module('ModuleAB', [
   }])
   .filter('int', function() {
     return function(i) {
-      return i.replace(/(\.[0-9]+)/, '');
+      return (+i).toFix();
     }
   })
   .controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
@@ -82,12 +82,6 @@ angular.module('ModuleAB', [
   ])
 
 .controller('aboutModal', function($scope, $http, $uibModalInstance) {
-  $http({
-    method: "GET",
-    url: "/LICENSE"
-  }).then(function(response) {
-    $scope.GPL = response.data;
-  });
   $http({
     method: "GET",
     url: "/api/v1/version"

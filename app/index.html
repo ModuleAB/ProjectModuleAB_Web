@@ -17,14 +17,6 @@
     <!-- MetisMenu CSS -->
     <link href="/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
-    <!-- DataTables CSS -->
-    <link href="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
-    <!--
-    <link href="bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-    -->
-
     <!-- Custom CSS -->
     <link href="/bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="/bower_components/angular-loading-bar/build/loading-bar.min.css" rel="stylesheet">
@@ -122,21 +114,21 @@
         <div class="modal-body">
             <uib-tabset>
                 <uib-tab index="0" heading="版本信息">
-                    <h4>Module AB - {{version.code}}</h4>
-                    <p>阿里云备份归档集成方案</p>
-                    <p>版本：{{version.version}}</p>
+                  <h4>Module AB - {{version.code}}</h4>
+                  <p>阿里云备份归档集成方案</p>
+                  <p>版本：{{version.version}}</p>
                 </uib-tab>
                 <uib-tab index="1" heading="GPL 许可">
-                    <h4>GPL v3</h4>
-                    <pre class="scrollable">{{GPL}}</pre>
+                  <h4>GPL v3</h4>
+                  <pre class="scrollable" ng-include="'common/license.html'"></pre>
                 </uib-tab>
                 <uib-tab index="2" heading="贡献者">
                   <h4>贡献者名单</h4>
-                  <pre class="scrollable">{{CONTRIBUTOR}}</pre>
+                  <pre class="scrollable" ng-include="'CONTRIBUTOR'"></pre>
                 </uib-tab>
                 <uib-tab index="3" heading="程序库">
-                    <h4>程序库</h4>
-                    <p></p>
+                  <h4>程序库</h4>
+                  <div ng-include="'common/libs.html'"></div>
                 </uib-tab>
             </uib-tabset>
        </div>
