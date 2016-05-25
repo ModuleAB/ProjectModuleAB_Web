@@ -66,13 +66,13 @@
               <span class="input-group-addon">
                 <i class="fa fa-table fa-fw"></i>
               </span>
-              <select ng-model="policy.target" class="form-control" ng-options="toInt(k) as v for (k, v) in types"></select>
+              <select ng-model="policy.target" class="form-control" ng-options="(+k) as v for (k, v) in types"></select>
             </div>
             <div class="form-group input-group" uib-tooltip="执行动作">
               <span class="input-group-addon">
                 <i class="fa fa-wrench fa-fw"></i>
               </span>
-              <select ng-model="policy.action" class="form-control" ng-options="toInt(k) as v for (k, v) in actions"></select>
+              <select ng-model="policy.action" class="form-control" ng-options="(+k) as v for (k, v) in actions"></select>
             </div>
 
             <div class="form-group input-group" ng-show="policy.action == 2" uib-tooltip="删除间隔（任务类型为删除时生效）">

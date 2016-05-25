@@ -22,7 +22,7 @@
               <span class="input-group-addon">
                 <i class="fa fa-book fa-fw"></i>
               </span>
-              <select ng-model="clientJob.type" class="form-control" ng-options="toInt(k) as v for (k, v) in actions">
+              <select ng-model="clientJob.type" class="form-control" ng-options="(+k) as v for (k, v) in actions">
               </select>
             </div>
             <div class="form-group input-group"  uib-tooltip="保留时长">

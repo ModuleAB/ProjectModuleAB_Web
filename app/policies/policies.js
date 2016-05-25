@@ -113,9 +113,6 @@ angular.module('ModuleAB.policies', ['ngRoute'])
 
 .controller('policyModal', function($scope, $http, $uibModalInstance, type,
   policy, types, actions) {
-  $scope.toInt = function(i) {
-    return parseInt(i);
-  }
 
   if (policy === undefined) {
     policy = {
@@ -281,16 +278,15 @@ angular.module('ModuleAB.policies', ['ngRoute'])
       $scope.modalInfoMsg = "需要指定有效的起始时间";
       return;
     }
-    $scope.policy.starttime = parseInt($scope.startTime) * 86400;
+    $scope.policy.starttime = (+$scope.startTime) * 86400;
 
     if (isNaN($scope.endTime)) {
       $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "需要指定有效的结束时间";
       return;
     }
-    $scope.policy.endtime = $scope.endTime == -1 ? parseInt(
-        $scope.endTime) :
-      parseInt($scope.endTime) * 86400;
+    $scope.policy.endtime = $scope.endTime == -1 ? +$scope.endTime :
+      (+$scope.endTime) * 86400;
 
     if ($scope.policy.target == 0) {
       $scope.modalInfoFadein = "fadein-opacity";
@@ -307,12 +303,11 @@ angular.module('ModuleAB.policies', ['ngRoute'])
       $scope.modalInfoMsg = "需要指定有效的删除间隔";
       return;
     }
-    $scope.policy.step = $scope.step == -1 ? parseInt($scope.step) :
-      parseInt($scope.step) *
-      86400;
+    $scope.policy.step = $scope.step == -1 ? +$scope.step :
+      (+$scope.step) * 86400;
 
-    $scope.policy.target = parseInt($scope.policy.target);
-    $scope.policy.action = parseInt($scope.policy.action);
+    $scope.policy.target = +$scope.policy.target;
+    $scope.policy.action = +$scope.policy.action;
 
     if ($scope.policy.target == 2 && $scope.policy.action == 1) {
       $scope.modalInfoFadein = "fadein-opacity";

@@ -106,9 +106,7 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
 
 .controller('clientJobModal', function($scope, $http, $uibModalInstance, type,
   clientJob, actions) {
-  $scope.toInt = function(i) {
-    return parseInt(i);
-  }
+
   $scope.actions = actions;
   if (clientJob === undefined) {
     clientJob = {
@@ -178,15 +176,15 @@ angular.module('ModuleAB.clientjobs', ['ngRoute'])
   });
 
   $scope.doJob = function() {
-    $scope.clientJob.period = parseInt($scope.clientJobperiod * 86400);
+    $scope.clientJob.period = (+$scope.clientJobperiod) * 86400;
     if ($scope.clientJob.period == 0) {
       $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "执行周期不能为 0";
       return;
     }
 
-    $scope.clientJob.reservedtime = parseInt($scope.clientJobreservedtime *
-      86400);
+    $scope.clientJob.reservedtime = (+$scope.clientJobreservedtime) *
+      86400;
     if ($scope.clientJob.reservedtime == 0) {
       $scope.modalInfoFadein = "fadein-opacity";
       $scope.modalInfoMsg = "保留时长不能为 0";
