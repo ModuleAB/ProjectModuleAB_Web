@@ -197,6 +197,7 @@ angular.module('ModuleAB.policies', ['ngRoute'])
       $scope.selectedAppSets.push(v.id);
     });
   });
+  $scope.selectedHosts = [];
   $scope.$watch('policy.hosts', function(s) {
     if (!s) {
       return;
@@ -205,6 +206,7 @@ angular.module('ModuleAB.policies', ['ngRoute'])
       $scope.selectedHosts.push(v.id);
     });
   });
+  $scope.selectedPaths = [];
   $scope.$watch('policy.paths', function(s) {
     if (!s) {
       return;
