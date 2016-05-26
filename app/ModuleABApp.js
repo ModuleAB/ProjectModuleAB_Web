@@ -24,11 +24,6 @@ angular.module('ModuleAB', [
   .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
   }])
-  .filter('int', function() {
-    return function(i) {
-      return (+i).toFix();
-    }
-  })
   .controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
     function($scope, $http, $uibModal, $rootScope) {
       $rootScope.dismiss = function() {
