@@ -116,10 +116,10 @@ angular.module('ModuleAB.records', ['ngRoute'])
           method: "GET",
           url: "/api/v1/records/" + record.id + "/recover"
         }).then(function(response) {
-          if (response.status == 204 && record.type == 2) {
+          if (record.type == 2) {
             $rootScope.failMessage =
               '此记录是一个归档，需要等待一段时间才会恢复到原来的位置';
-          } else if (response.status == 200 && record.type == 1) {
+          } else if (record.type == 1) {
             $rootScope.failMessage = '此记录是一个备份，客户端已开始下载此备份';
           }
           $rootScope.alertType = 'alert-success';
