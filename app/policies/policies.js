@@ -61,7 +61,7 @@ angular.module('ModuleAB.policies', ['ngRoute'])
     $scope.delete = function(policy) {
       var modal = $uibModal.open({
         templateUrl: 'common/deleteModal.html',
-        controller: 'deleteAppSetModal',
+        controller: 'deletePolicyModal',
         resolve: {
           policy: function() {
             return policy;
@@ -101,7 +101,7 @@ angular.module('ModuleAB.policies', ['ngRoute'])
   }
 ])
 
-.controller('deleteAppSetModal', function($scope, $uibModalInstance, policy) {
+.controller('deletePolicyModal', function($scope, $uibModalInstance, policy) {
   $scope.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };

@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ModuleAB.appsets', ['ngRoute'])
+angular.module('ModuleAB.appsets', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/appsets', {
