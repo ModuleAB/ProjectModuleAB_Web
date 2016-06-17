@@ -119,7 +119,6 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
       name: "",
       ip: "",
       appset: null,
-      backupsets: [],
       path: []
     };
   }
@@ -130,15 +129,6 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
     url: "/api/v1/appSets"
   }).then(function(response) {
     $scope.appSets = response.data;
-  }, function(response) {
-    // do nothing.
-  });
-
-  $http({
-    method: "GET",
-    url: "/api/v1/backupSets"
-  }).then(function(response) {
-    $scope.backupSets = response.data;
   }, function(response) {
     // do nothing.
   });
@@ -156,15 +146,6 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
   } catch (e) {
     $scope.selectedAppSet = "";
   }
-  $scope.selectedBackupSets = [];
-  $scope.$watch('host.backupsets', function(s) {
-    if (!s) {
-      return;
-    }
-    angular.forEach(s, function(v) {
-      $scope.selectedBackupSets.push(v.id.toString());
-    });
-  });
   $scope.selectedPaths = [];
   $scope.$watch('host.path', function(s) {
     if (!s) {
@@ -217,14 +198,6 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
       return;
     }
 
-    $scope.host.backupsets = [];
-    angular.forEach($scope.selectedBackupSets, function(s0) {
-      angular.forEach($scope.backupSets, function(s1) {
-        if (s1.id == s0) {
-          $scope.host.backupsets.push(s1);
-        }
-      });
-    });
     $scope.host.path = [];
     angular.forEach($scope.selectedPaths, function(s0) {
       angular.forEach($scope.paths, function(s1) {
