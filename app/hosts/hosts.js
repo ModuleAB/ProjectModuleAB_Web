@@ -11,6 +11,7 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
 
 .controller('hosts', ['$scope', '$http', '$uibModal', '$rootScope',
   function($scope, $http, $uibModal, $rootScope) {
+    var clientStatus;
     $scope.currentPage = 1;
     $scope.numPerPage = 15;
     $scope.hostsGet = function() {
@@ -35,7 +36,19 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
       });
     };
 
+    $scope.hostsRunGet = function() {
+      $http({
+        method: "GET",
+        url: "/api/v1/client/config/status"
+      }).then(function(response) {
+        clientStatus = response.data;
+      }, function(response) {
+        clientStatus = null;
+      });
+    };
+
     $scope.hostsGet();
+    $scope.hostsRunGet();
 
     $scope.hostEdit = function(type, host) {
       var modal = $uibModal.open({
@@ -57,6 +70,19 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
 
     $scope.orderBy = function(o) {
       $scope.order = o;
+    }
+
+    $scope.getStatus = function(id) {
+      var s = '<i class="fa {0} fa-fw"></i> {1}'
+      try {
+        if (clientStatus[id] === 1) {
+          return s.format('fa-check', '运行中');
+        } else {
+          return s.format('fa-times', '未运行');
+        }
+      } catch (e) {
+        return s.format('fa-question', '未知');
+      }
     }
 
     $scope.delete = function(host) {

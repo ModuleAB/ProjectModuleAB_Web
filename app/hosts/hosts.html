@@ -67,6 +67,9 @@
             <th ng-click="orderBy('appset.name')">
               所属应用集 <i class="fa fa-sort-amount-asc fa-fw"></i>
             </th>
+            <th>
+              客户端状态
+            </th>
             <th>监控路径</th>
             <th></th>
         </thead>
@@ -76,6 +79,9 @@
                 <td class="table-td-padding">{{host.name}}</td>
                 <td class="table-td-padding">{{host.ip}}</td>
                 <td class="table-td-padding">{{host.appset.name}}</td>
+                <td class="table-td-padding">
+                  {{getStatus(host.id)}}
+                </td>
                 <td class="table-td-padding">
                   <ul class="list-unstyled list-no-margin">
                     <li ng-repeat="p in host.path">{{p.path}}</li>
