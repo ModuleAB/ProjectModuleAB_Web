@@ -73,15 +73,10 @@ angular.module('ModuleAB.hosts', ['ngRoute'])
     }
 
     $scope.getStatus = function(id) {
-      var s = '<i class="fa {0} fa-fw"></i> {1}'
       try {
-        if (clientStatus[id] === 1) {
-          return s.format('fa-check', '运行中');
-        } else {
-          return s.format('fa-times', '未运行');
-        }
+        return clientStatus[id];
       } catch (e) {
-        return s.format('fa-question', '未知');
+        return 0;
       }
     }
 

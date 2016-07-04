@@ -79,7 +79,12 @@
                 <td class="table-td-padding">{{host.name}}</td>
                 <td class="table-td-padding">{{host.ip}}</td>
                 <td class="table-td-padding">{{host.appset.name}}</td>
-                <td class="table-td-padding">{{getStatus(host.id)}}</td>
+                <td class="table-td-padding">
+                  <span ng-class="getStatus(host.id)==1?'green':'red'">
+                    <i class="fa fa-fw" ng-class="getStatus(host.id)==1?'fa-check':'fa-times'"></i>
+                    {{getStatus(host.id)==1?'运行中':'未运行'}}
+                  </span>
+                </td>
                 <td class="table-td-padding">
                   <ul class="list-unstyled list-no-margin">
                     <li ng-repeat="p in host.path">{{p.path}}</li>
