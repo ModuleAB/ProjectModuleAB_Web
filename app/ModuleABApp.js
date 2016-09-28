@@ -25,7 +25,8 @@ angular.module('ModuleAB', [
     cfpLoadingBarProvider.includeSpinner = false;
   }])
   .controller("topNavBar", ['$scope', '$http', '$uibModal', '$rootScope',
-    function($scope, $http, $uibModal, $rootScope) {
+    '$window',
+    function($scope, $http, $uibModal, $rootScope, $window) {
       $rootScope.dismiss = function() {
         $rootScope.fadein = '';
       };
@@ -38,18 +39,18 @@ angular.module('ModuleAB', [
         $scope.session = response.data;
         $rootScope.loaded = true;
       }, function(response) {
-        window.location.href = "/login";
+        $window.location.href = "/login";
       });
       $scope.logout = function() {
         $http({
           method: "GET",
           url: "/api/v1/auth/logout"
         }).then(function(response) {
-          window.location.href = "/login";
+          $window.location.href = "/login";
         }, function(response) {
           switch (response.status) {
             case 401:
-              window.location.href = "/login";
+              $window.location.href = "/login";
               break;
           }
         });
@@ -89,7 +90,7 @@ angular.module('ModuleAB', [
 })
 
 .controller('userProfileModal', function($scope, $http, $uibModalInstance,
-  session) {
+  $window, session) {
   $http({
     method: "GET",
     url: "/api/v1/users/" + session.name
@@ -101,7 +102,7 @@ angular.module('ModuleAB', [
     $rootScope.fadein = 'fadein-opacity';
     switch (response.status) {
       case 401:
-        window.location.href = "/login";
+        $window.location.href = "/login";
         break;
       case 403:
         $rootScope.failMessage = "没有权限";
