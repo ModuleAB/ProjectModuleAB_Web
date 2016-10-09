@@ -15,7 +15,7 @@
     "html5-boilerplate": "~5.2.0",
     "jquery": "~2.2.0",
     "bootstrap": "~3.3.6",
-    "startbootstrap-sb-admin-2": "~1.0.0",
+    "startbootstrap-sb-admin-2": "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2.git#master",
     "angular-loading-bar": "~0.9.0"
   }
 }
