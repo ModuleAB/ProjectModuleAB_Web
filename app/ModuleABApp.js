@@ -14,7 +14,8 @@ angular.module('ModuleAB', [
     'ModuleAB.oss',
     'ModuleAB.oas',
     'ModuleAB.users',
-    'ModuleAB.clientjobs'
+    'ModuleAB.clientjobs',
+    'ModuleAB.faillogs',
   ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.otherwise({
