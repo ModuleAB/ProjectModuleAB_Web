@@ -19,7 +19,7 @@ angular.module('ModuleAB', [
   ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.otherwise({
-      redirectTo: '/records'
+      redirectTo: '/hosts'
     });
   }])
   .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
